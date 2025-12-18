@@ -1,108 +1,139 @@
 import { motion } from "framer-motion";
-import { Award } from "lucide-react";
+import { Award, CheckCircle2, ShieldCheck, Calendar } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const certifications = [
   {
     title: "Certified Penetration Testing",
     issuer: "RedTeam Hacker Academy",
-    date: "Ongoing"
+    date: "Ongoing",
+    id: "CPT-2025-X82",
+    status: "In Progress"
   },
   {
     title: "Advanced Ethical Hacking",
     issuer: "GUVI",
-    date: "Oct 2025"
+    date: "Oct 2025",
+    id: "AEH-8821-V2",
+    status: "Completed"
   },
   {
-    title: "Cybersecurity and Ethical Hacking",
+    title: "Cybersecurity & Ethical Hacking",
     issuer: "Internship Studio",
-    date: "Aug 2024"
+    date: "Aug 2024",
+    id: "CSEH-2024-001",
+    status: "Completed"
   },
   {
     title: "Wireshark & Metasploit",
     issuer: "Infosys Springboard",
-    date: "Dec 2024"
+    date: "Dec 2024",
+    id: "INF-WM-992",
+    status: "Completed"
   },
   {
     title: "Diploma in C & C++ Programming",
     issuer: "TCEDS",
-    date: "Sep 2022"
+    date: "Sep 2022",
+    id: "TCEDS-DEV-22",
+    status: "Completed"
   },
   {
     title: "Linux, Network Security, Nmap",
     issuer: "Udemy",
-    date: "2024"
+    date: "2024",
+    id: "UDMY-SEC-24",
+    status: "Completed"
   }
 ];
 
 export function Certifications() {
   return (
-    <section id="certifications" className="py-20 md:py-28 relative overflow-hidden bg-gradient-to-br from-background via-card/20 to-background">
-      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-      <div className="absolute -top-40 right-0 w-96 h-96 bg-primary/15 rounded-full blur-3xl -z-10" />
-      <div className="absolute -bottom-40 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -z-10" />
+    <section id="certifications" className="section-padding relative overflow-hidden">
       
-      <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[120px] -z-10" />
+
+      <div className="container-custom relative z-10">
+        
+        {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            <span className="text-primary">📜</span> Certifications
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            Professional <span className="text-gradient">Certifications</span>
           </h2>
-          <p className="text-muted-foreground text-lg">Professional Credentials & Qualifications</p>
+          <div className="h-1 w-24 mx-auto rounded-full bg-gradient-to-r from-primary/50 via-primary to-primary/50" />
+          <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
+            Authorized credentials and technical qualifications.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {certifications.map((cert, index) => (
             <motion.div 
               key={cert.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
               viewport={{ once: true }}
-              whileHover={{ y: -6 }}
-              className="group relative"
+              className="group relative h-full"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/15 to-secondary/15 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300 -z-10" />
-              
-              <div className="glass-card p-8 rounded-2xl border border-border/50 hover:border-primary/50 transition-all duration-300 h-full flex flex-col hover:shadow-[0_0_30px_hsl(180_100%_50%_/_0.15)]">
-                {/* Date Badge */}
-                <div className="absolute -top-3 -right-3 bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary/40 px-4 py-1.5 rounded-full text-xs font-bold text-primary group-hover:scale-110 transition-transform">
-                  {cert.date}
-                </div>
+              {/* Card */}
+              <div className="glass-card p-1 h-full hover:-translate-y-2 transition-transform duration-300">
+                <div className="bg-background/40 h-full rounded-xl p-6 relative overflow-hidden flex flex-col">
+                  
+                  {/* Top Decoration Line */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
 
-                {/* Icon */}
-                <motion.div 
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                  className="p-4 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/5 border border-secondary/30 w-fit mb-6"
-                >
-                  <Award className="w-7 h-7 text-secondary" />
-                </motion.div>
+                  {/* Header: Icon & Date */}
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 text-primary shadow-[0_0_15px_hsl(var(--primary)/0.2)] group-hover:scale-110 transition-transform duration-300">
+                      <Award className="w-6 h-6" />
+                    </div>
+                    <Badge variant="outline" className="border-white/10 bg-white/5 text-xs font-mono">
+                      {cert.date}
+                    </Badge>
+                  </div>
 
-                {/* Title */}
-                <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {cert.title}
-                </h3>
+                  {/* Content */}
+                  <div className="mb-6 flex-grow">
+                    <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                      {cert.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                      <ShieldCheck className="w-4 h-4 text-secondary/70" />
+                      <span>{cert.issuer}</span>
+                    </div>
+                  </div>
 
-                {/* Issuer */}
-                <div className="flex items-center gap-3 text-muted-foreground text-sm flex-grow">
-                  <div className="w-2 h-2 rounded-full bg-primary/60 flex-shrink-0" />
-                  <span className="group-hover:text-foreground transition-colors">{cert.issuer}</span>
-                </div>
-                
-                {/* Divider and status */}
-                <div className="mt-6 pt-6 border-t border-border/30">
-                  <motion.div 
-                    animate={{ x: [0, 3, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="text-primary text-xs font-semibold flex items-center gap-1"
-                  >
-                    ✓ Verified <span>→</span>
-                  </motion.div>
+                  {/* Footer: ID & Verified Status */}
+                  <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Credential ID</span>
+                      <span className="text-xs font-mono text-primary/80">{cert.id}</span>
+                    </div>
+                    
+                    {cert.status === "Ongoing" ? (
+                       <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-[10px] font-medium text-yellow-500">
+                         <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
+                         In Progress
+                       </div>
+                    ) : (
+                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-medium text-emerald-500">
+                        <CheckCircle2 className="w-3 h-3" />
+                        Verified
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Hover Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500" />
                 </div>
               </div>
             </motion.div>

@@ -7,7 +7,10 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Roadmap from "./pages/Roadmap";
 import NotFound from "./pages/NotFound";
+import { Chatbot } from "@/components/Chatbot";
+import { LatestBlogPopup } from "@/components/LatestBlogPopup";
 
 const queryClient = new QueryClient();
 
@@ -22,9 +25,13 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/roadmap" element={<Roadmap />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          
+          <LatestBlogPopup />
+          <Chatbot />
+          
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

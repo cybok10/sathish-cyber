@@ -1,30 +1,18 @@
+/* src/App.css */
+
+/* 1. Global Reset for Modern Layouts */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left; /* Fixes the centering issue */
+  overflow-x: hidden;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
+/* 2. React Logo Animation (Optional, kept for compatibility) */
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -33,40 +21,16 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-/* Hero animations and helpers */
-.hero-image-container { }
-.hero-avatar { background: linear-gradient(135deg, rgba(14,165,233,0.06), rgba(124,58,237,0.04)); }
-
-/* Icon positioning around the circle */
-.icon {
-  transition: all 0.3s ease;
-}
-
-.icon-1 { top: -24px; left: 50%; transform: translateX(-50%); }
-.icon-2 { bottom: -24px; right: -24px; }
-.icon-3 { top: 24px; right: -32px; }
-.icon-4 { bottom: 24px; left: -32px; }
-
-.float-float { animation: float 3.5s ease-in-out infinite; }
-.animation-delay-200 { animation-delay: 0.2s; }
-.animation-delay-400 { animation-delay: 0.4s; }
-.animation-delay-600 { animation-delay: 0.6s; }
+/* 3. Floating Animation (Used for modern 3D feel) */
+.float-float { animation: float 6s ease-in-out infinite; }
 
 @keyframes float {
-  0% { transform: translateY(0) }
-  50% { transform: translateY(-8px) }
-  100% { transform: translateY(0) }
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
-/* Orbiting badge animation */
+/* 4. Orbit Animation (Kept but slowed down for elegance) */
 .orbit-wrapper {
   width: 400px;
   height: 400px;
@@ -76,7 +40,7 @@
 .orbit-track {
   width: 100%;
   height: 100%;
-  animation: orbit-rotate 15s linear infinite;
+  animation: orbit-rotate 20s linear infinite; /* Slower = More Premium */
 }
 
 .orbit-item {
@@ -86,22 +50,9 @@
   transform: translateX(-50%) translateY(-180px);
 }
 
-.badge-pill {
-  background: linear-gradient(90deg, rgba(14, 165, 233, 0.1), rgba(124, 58, 237, 0.05));
-  border: 1px solid rgba(14, 165, 233, 0.2);
-  backdrop-filter: blur(8px);
-}
-
-.animate-orbit-rotate {
-  animation: orbit-rotate 15s linear infinite;
-}
-
 @keyframes orbit-rotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* Small glass-card/badge fallback styling */
-.glass-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); box-shadow: 0 6px 18px rgba(2,6,23,0.35); }
-.badge { background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.04); }
-.neon-border { border-color: hsl(180, 100%, 50%); }
+/* CLEANUP: Removed conflicting .glass-card and .card styles */

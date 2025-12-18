@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { 
+  ChevronDown, Download, Mail, Terminal, Shield, Cpu, 
+  Lock, Code, Database, ShieldCheck, Github, Linkedin, Target 
+} from "lucide-react";
+
 
 const roles = [
+  "Certified Penetration Tester",
   "Cybersecurity Researcher",
   "Ethical Hacker",
-  "Penetration Tester",
   "Automation Engineer"
 ];
 
@@ -38,255 +42,215 @@ export function Hero() {
   }, [displayText, isDeleting, currentRole]);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden cyber-grid pt-16 md:pt-0">
-      {/* Animated background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background" />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/15 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_hsl(180_100%_50%_/_0.08),_transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_hsl(270_60%_60%_/_0.06),_transparent_50%)]" />
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 md:pt-0">
       
-      {/* Floating particles effect */}
-      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary/50 rounded-full animate-pulse" />
-      <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-secondary/50 rounded-full animate-pulse animation-delay-200" />
-      <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-primary/30 rounded-full animate-pulse animation-delay-400" />
-      
-      <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center min-h-[calc(100vh-120px)]">
-            {/* Left: Text Content */}
-            <motion.div className="flex flex-col justify-center space-y-8 order-2 md:order-1">
-              {/* Greeting */}
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="flex items-center gap-3"
-              >
-                <span className="text-3xl">👋</span>
-                <span className="text-lg text-muted-foreground font-medium">Hi, I'm Sathish M</span>
-              </motion.div>
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] opacity-30 animate-pulse-slow" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[700px] h-[700px] bg-secondary/20 rounded-full blur-[120px] opacity-30 animate-pulse-slow delay-1000" />
+      </div>
 
-              {/* Name */}
-              <motion.h1 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight font-mono leading-tight"
-              >
-                <span className="text-foreground">Sathish</span>{" "}
-                <span className="gradient-text">M</span>
-              </motion.h1>
-
-              {/* Static Role */}
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xl md:text-2xl text-muted-foreground font-medium"
-              >
-                Certified Penetration Tester | Ethical Hacker
-              </motion.p>
-
-              {/* Typewriter Effect */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="h-12 flex items-center"
-              >
-                <span className="text-lg md:text-xl neon-text font-mono bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  {">"} {displayText}
-                  <span className="animate-pulse ml-1 text-primary">_</span>
-                </span>
-              </motion.div>
-
-              {/* Tagline */}
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-muted-foreground max-w-2xl text-lg leading-relaxed"
-              >
-                Securing the digital world through offensive security and intelligent automation.
-              </motion.p>
-
-              {/* CTA Buttons */}
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="flex flex-wrap gap-4 pt-8"
-              >
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-primary to-cyan-400 text-primary-foreground hover:shadow-[0_0_40px_hsl(180_100%_50%_/_0.6)] font-semibold px-8 transition-all duration-300 transform hover:scale-105"
-                  onClick={() => {
-                    const link = document.createElement('a');
-                    link.href = '/resume.pdf';
-                    link.download = 'Sathish_M_Resume.pdf';
-                    link.click();
-                  }}
-                >
-                  Download Resume ↓
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-2 border-primary/60 text-foreground hover:bg-primary/10 hover:border-primary/90 font-semibold px-8 transition-all duration-300 hover:scale-105 transform"
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Contact Me →
-                </Button>
-              </motion.div>
-            </motion.div>
-
-            {/* Right: Hero Image with Tech Icons Orbiting */}
+      {/* Main Container */}
+      <div className="w-full max-w-[95%] mx-auto px-4 md:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[calc(100vh-100px)]">
+          
+          {/* LEFT: Content */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col justify-center space-y-8 order-2 lg:order-1 text-center lg:text-left pl-0 lg:pl-10"
+          >
+            {/* Status Badge */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center items-center order-1 md:order-2"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex justify-center lg:justify-start"
             >
-              <div className="hero-image-container relative w-96 h-96 flex items-center justify-center">
-                {/* Purple gradient background glow */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary/40 via-primary/30 to-secondary/20 blur-3xl animate-pulse" />
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/30 to-secondary/30 blur-3xl animate-pulse animation-delay-300" />
-                
-                {/* Main avatar circle with purple gradient border */}
-                <motion.div 
-                  whileHover={{ scale: 1.05 }}
-                  className="relative z-10 w-72 h-72 rounded-full overflow-hidden border-4 border-gradient-to-r from-secondary via-primary to-secondary shadow-2xl neon-border"
-                  style={{
-                    borderImage: 'linear-gradient(135deg, hsl(270 60% 50%), hsl(180 100% 50%), hsl(270 60% 50%)) 1'
-                  }}
-                >
-                  <img 
-                    src="https://via.placeholder.com/300/1a1a2e/00ffff?text=Sathish+M" 
-                    alt="Sathish M" 
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-
-                {/* Tech Icons Orbiting - 9 positions */}
-                {/* Icon 1 - Top */}
-                <motion.div 
-                  className="icon icon-1 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(120_100%_50%_/_0.6)]"
-                  style={{ top: '-10px', left: '50%', transform: 'translateX(-50%)' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ y: [0, -5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <span className="text-2xl">🔐</span>
-                </motion.div>
-
-                {/* Icon 2 - Top Right */}
-                <motion.div 
-                  className="icon icon-2 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(210_100%_50%_/_0.6)]"
-                  style={{ top: '30px', right: '-10px' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ x: [0, 5, 0], y: [0, -3, 0] }}
-                  transition={{ duration: 2.2, repeat: Infinity, delay: 0.2 }}
-                >
-                  <span className="text-2xl">⚙️</span>
-                </motion.div>
-
-                {/* Icon 3 - Right */}
-                <motion.div 
-                  className="icon icon-3 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border border-cyan-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(180_100%_50%_/_0.6)]"
-                  style={{ top: '50%', right: '-10px', transform: 'translateY(-50%)' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 2.4, repeat: Infinity, delay: 0.4 }}
-                >
-                  <span className="text-2xl">🐍</span>
-                </motion.div>
-
-                {/* Icon 4 - Bottom Right */}
-                <motion.div 
-                  className="icon icon-4 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(270_100%_50%_/_0.6)]"
-                  style={{ bottom: '30px', right: '-10px' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ x: [0, 5, 0], y: [0, 3, 0] }}
-                  transition={{ duration: 2.2, repeat: Infinity, delay: 0.6 }}
-                >
-                  <span className="text-2xl">🎨</span>
-                </motion.div>
-
-                {/* Icon 5 - Bottom */}
-                <motion.div 
-                  className="icon icon-5 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-orange-500/20 to-orange-600/10 border border-orange-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(30_100%_50%_/_0.6)]"
-                  style={{ bottom: '-10px', left: '50%', transform: 'translateX(-50%)' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ y: [0, 5, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}
-                >
-                  <span className="text-2xl">📱</span>
-                </motion.div>
-
-                {/* Icon 6 - Bottom Left */}
-                <motion.div 
-                  className="icon icon-6 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-red-500/20 to-red-600/10 border border-red-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(0_100%_50%_/_0.6)]"
-                  style={{ bottom: '30px', left: '-10px' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ x: [-5, 0, -5], y: [0, 3, 0] }}
-                  transition={{ duration: 2.2, repeat: Infinity, delay: 0.6 }}
-                >
-                  <span className="text-2xl">🛡️</span>
-                </motion.div>
-
-                {/* Icon 7 - Left */}
-                <motion.div 
-                  className="icon icon-7 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 border border-yellow-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(45_100%_50%_/_0.6)]"
-                  style={{ top: '50%', left: '-10px', transform: 'translateY(-50%)' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ x: [-5, 0, -5] }}
-                  transition={{ duration: 2.4, repeat: Infinity, delay: 0.4 }}
-                >
-                  <span className="text-2xl">⚡</span>
-                </motion.div>
-
-                {/* Icon 8 - Top Left */}
-                <motion.div 
-                  className="icon icon-8 absolute w-14 h-14 rounded-lg glass-card bg-gradient-to-br from-pink-500/20 to-pink-600/10 border border-pink-500/30 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(340_100%_50%_/_0.6)]"
-                  style={{ top: '30px', left: '-10px' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ x: [-5, 0, -5], y: [0, -3, 0] }}
-                  transition={{ duration: 2.2, repeat: Infinity, delay: 0.2 }}
-                >
-                  <span className="text-2xl">🔧</span>
-                </motion.div>
-
-                {/* Icon 9 - Center Top (Badge) */}
-                <motion.div 
-                  className="icon icon-9 absolute w-16 h-16 rounded-lg glass-card bg-gradient-to-br from-primary/30 to-secondary/20 border-2 border-primary/50 p-2 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_hsl(180_100%_50%_/_0.6)]"
-                  style={{ top: '10px', right: '30px' }}
-                  whileHover={{ scale: 1.2, rotateZ: 10 }}
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 2.6, repeat: Infinity, delay: 0.8 }}
-                >
-                  <span className="text-2xl">🎯</span>
-                </motion.div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+                </span>
+                Available for Projects
               </div>
             </motion.div>
-          </div>
+
+            {/* Main Headline */}
+            <div className="space-y-4">
+              <h2 className="text-2xl md:text-3xl text-muted-foreground font-medium flex items-center justify-center lg:justify-start gap-3">
+                Hello, I'm
+              </h2>
+              <h1 className="text-6xl md:text-8xl font-bold tracking-tight">
+                <span className="text-foreground">Sathish</span>{" "}
+                <span className="text-gradient">M</span>
+              </h1>
+            </div>
+
+            {/* Highlighted Title */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex items-center justify-center lg:justify-start gap-4"
+            >
+              <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
+                 <ShieldCheck className="w-8 h-8 text-primary" />
+              </div>
+              <span className="text-2xl md:text-4xl font-bold text-foreground">
+                Certified Penetration Tester
+              </span>
+            </motion.div>
+
+            {/* Typewriter Role */}
+            <div className="h-10 md:h-14 flex items-center justify-center lg:justify-start">
+              <span className="text-xl md:text-2xl font-mono text-muted-foreground">
+                <span className="text-primary mr-3">&gt;</span>
+                Specializing in: <span className="text-foreground font-semibold">{displayText}</span>
+                <span className="animate-pulse ml-1 text-primary">_</span>
+              </span>
+            </div>
+
+            {/* Description */}
+            <p className="text-muted-foreground text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Securing the digital frontier through offensive security, vulnerability research, and intelligent automation. I turn complex security challenges into robust defense systems.
+            </p>
+
+            {/* SOCIAL ICONS (Added Here) */}
+            <div className="flex items-center justify-center lg:justify-start gap-5 pt-2">
+              <a 
+                href="https://github.com/cybok10" 
+                target="_blank" 
+                rel="noreferrer"
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 text-muted-foreground hover:text-primary transition-all duration-300 hover:-translate-y-1"
+                aria-label="GitHub"
+              >
+                <Github className="w-6 h-6" />
+              </a>
+              <a 
+                href="https://linkedin.com/in/amsathish" 
+                target="_blank" 
+                rel="noreferrer"
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-blue-500/50 text-muted-foreground hover:text-blue-500 transition-all duration-300 hover:-translate-y-1"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-6 h-6" />
+              </a>
+              <a 
+                href="https://tryhackme.com/p/cybok" 
+                target="_blank" 
+                rel="noreferrer"
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-red-500/50 text-muted-foreground hover:text-red-500 transition-all duration-300 hover:-translate-y-1"
+                aria-label="TryHackMe"
+              >
+                <Target className="w-6 h-6" />
+              </a>
+              <a 
+                href="mailto:sathish1012cybok@gmail.com"
+                className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-purple-500/50 text-muted-foreground hover:text-purple-500 transition-all duration-300 hover:-translate-y-1"
+                aria-label="Email"
+              >
+                <Mail className="w-6 h-6" />
+              </a>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-5 pt-4 justify-center lg:justify-start">
+              <Button 
+                size="lg" 
+                className="h-14 text-lg px-8 bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-105"
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/resume.pdf';
+                  link.download = 'Sathish_M_Resume.pdf';
+                  link.click();
+                }}
+              >
+                <Download className="mr-3 h-5 w-5" />
+                Download Resume
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="h-14 text-lg px-8 border-primary/20 bg-primary/5 text-foreground hover:bg-primary/10 hover:border-primary/40 backdrop-blur-sm transition-all hover:scale-105"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Terminal className="mr-3 h-5 w-5" />
+                Contact Me
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* RIGHT: Visuals (Your Original Static Design) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="order-1 lg:order-2 flex justify-center items-center relative"
+          >
+            <div className="relative w-[400px] h-[400px] md:w-[600px] md:h-[600px]">
+              {/* Static Rings */}
+              <div className="absolute inset-0 rounded-full border border-primary/20 scale-100" />
+              <div className="absolute inset-12 rounded-full border border-secondary/20 scale-95" />
+              <div className="absolute inset-24 rounded-full border border-primary/10 scale-90" />
+
+              {/* Center Avatar */}
+              <div className="absolute inset-0 m-auto w-64 h-64 md:w-96 md:h-96 rounded-full overflow-hidden glass-card z-20 p-3 shadow-2xl shadow-primary/30">
+                <div className="w-full h-full rounded-full overflow-hidden bg-background relative">
+                   <img 
+                    src="/avatar.png" 
+                    alt="Sathish M" 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-50"></div>
+                </div>
+              </div>
+
+              {/* Floating Icons */}
+              {[
+                { Icon: Shield, color: "text-emerald-400", bg: "bg-emerald-400/10", top: "5%", left: "50%" },
+                { Icon: Terminal, color: "text-blue-400", bg: "bg-blue-400/10", top: "20%", right: "10%" },
+                { Icon: Lock, color: "text-purple-400", bg: "bg-purple-400/10", bottom: "30%", right: "0%" },
+                { Icon: Code, color: "text-orange-400", bg: "bg-orange-400/10", bottom: "5%", left: "60%" },
+                { Icon: Database, color: "text-cyan-400", bg: "bg-cyan-400/10", bottom: "20%", left: "5%" },
+                { Icon: Cpu, color: "text-red-400", bg: "bg-red-400/10", top: "20%", left: "10%" },
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  className={`absolute w-16 h-16 md:w-20 md:h-20 rounded-2xl glass-card flex items-center justify-center ${item.bg} border border-white/10 shadow-lg backdrop-blur-md z-30`}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.1, y: -5 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  style={{ 
+                    top: item.top, 
+                    left: item.left, 
+                    right: item.right, 
+                    bottom: item.bottom 
+                  }}
+                >
+                  <item.Icon className={`w-8 h-8 ${item.color}`} />
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <ChevronDown className="w-8 h-8 text-primary/50 hover:text-primary transition-colors" />
-        </motion.div>
+        <span className="text-sm font-medium text-muted-foreground uppercase tracking-widest">Scroll</span>
+        <ChevronDown className="w-6 h-6 text-primary animate-bounce" />
       </motion.div>
+
     </section>
   );
 }
