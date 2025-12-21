@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import { 
-  Shield, Terminal, Globe, Server, Lock, 
-  Cpu, FileCode, Search, AlertTriangle, 
-  Cloud, CheckCircle2, Flag, ChevronRight,
-  BookOpen, ExternalLink, Play
+  Shield, Terminal, Globe, Monitor, FileCode, Search, AlertTriangle, 
+  Cloud, CheckCircle2, Flag, ChevronRight, BookOpen, ExternalLink, Play, 
+  Radio, Database, Workflow, Bug, Target, Lock, Cpu
 } from "lucide-react";
 import {
   Sheet,
@@ -16,472 +14,236 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 
-// Comprehensive Roadmap Data
+// --- COMPREHENSIVE 20-LEVEL DATA (ALL COMPLETED) ---
 const levels = [
-  {
-    id: 1,
-    title: "IT Fundamentals",
-    subtitle: "The Foundation",
-    icon: Cpu,
-    status: "COMPLETED",
-    summary: "Before you can break systems, you must understand how they are built.",
-    details: {
-      concepts: [
-        "Computer Architecture (RAM, CPU, I/O)",
-        "Operating Systems (Windows vs Linux)",
-        "Virtualization (VMware / VirtualBox)",
-        "File Systems (NTFS, EXT4)"
-      ],
-      tools: ["VirtualBox", "PowerShell", "Command Prompt", "Git"],
-      tasks: [
-        { title: "Install a Virtual Machine", type: "Lab" },
-        { title: "Master basic Linux commands (ls, cd, grep, chmod)", type: "Learn" },
-        { title: "Understand binary & hexadecimal basics", type: "Theory" }
-      ],
-      resources: [
-        { name: "Professor Messer A+ Course", url: "#" },
-        { name: "Linux Journey", url: "https://linuxjourney.com/" }
-      ]
-    },
-    color: "emerald"
-  },
-  {
-    id: 2,
-    title: "Networking",
-    subtitle: "The Nervous System",
-    icon: Globe,
-    status: "COMPLETED",
-    summary: "Understanding how data flows is critical for interception and analysis.",
-    details: {
-      concepts: [
-        "OSI Model & TCP/IP Stack",
-        "IP Addressing (IPv4/IPv6) & Subnetting",
-        "Common Protocols (DNS, HTTP/S, FTP, SSH, DHCP)",
-        "Ports & Sockets"
-      ],
-      tools: ["Wireshark", "Ping / Traceroute", "Netcat", "Cisco Packet Tracer"],
-      tasks: [
-        { title: "Capture packets with Wireshark", type: "Lab" },
-        { title: "Configure a basic home network", type: "Project" },
-        { title: "Understand the TCP 3-Way Handshake", type: "Theory" }
-      ],
-      resources: [
-        { name: "Network+ Training", url: "#" },
-        { name: "Cisco Networking Academy", url: "#" }
-      ]
-    },
-    color: "emerald"
-  },
-  {
-    id: 3,
-    title: "Linux & Scripting",
-    subtitle: "The Weaponry",
-    icon: FileCode,
-    status: "ACTIVE",
-    summary: "Automation is the key to scaling your attacks and defense.",
-    details: {
-      concepts: [
-        "Linux File System Hierarchy",
-        "Bash Scripting (Loops, Variables, Functions)",
-        "Python for Cybersecurity (Requests, Scapy)",
-        "Regular Expressions (Regex)"
-      ],
-      tools: ["Kali Linux", "VS Code", "Vim / Nano", "Bash"],
-      tasks: [
-        { title: "Write a Bash script to ping a range of IPs", type: "Code" },
-        { title: "Write a Python port scanner", type: "Code" },
-        { title: "Install and configure Kali Linux", type: "Lab" }
-      ],
-      resources: [
-        { name: "Automate the Boring Stuff with Python", url: "#" },
-        { name: "OverTheWire: Bandit Wargame", url: "https://overthewire.org/wargames/bandit/" }
-      ]
-    },
-    color: "blue"
-  },
-  {
-    id: 4,
-    title: "Security Core",
-    subtitle: "Defensive Theory",
-    icon: Shield,
-    status: "LOCKED",
-    summary: "Learn the rules of engagement, ethics, and defensive principles.",
-    details: {
-      concepts: [
-        "CIA Triad (Confidentiality, Integrity, Availability)",
-        "Authentication vs Authorization",
-        "Cryptography (Symmetric/Asymmetric, Hashing)",
-        "Risk Management & Compliance (GDPR, HIPAA)"
-      ],
-      tools: ["OpenSSL", "GPG", "LastPass / KeePass"],
-      tasks: [
-        { title: "Encrypt a file using GPG", type: "Lab" },
-        { title: "Generate an SSH Key Pair", type: "Lab" },
-        { title: "Read the OWASP Top 10", type: "Read" }
-      ],
-      resources: [
-        { name: "CompTIA Security+", url: "#" },
-        { name: "Cybrary Security Fundamentals", url: "#" }
-      ]
-    },
-    color: "slate"
-  },
-  {
-    id: 5,
-    title: "Offensive Ops",
-    subtitle: "Red Teaming",
-    icon: Search,
-    status: "LOCKED",
-    summary: "The art of exploitation. Simulate attacks to find weaknesses.",
-    details: {
-      concepts: [
-        "Reconnaissance (Passive/Active)",
-        "Scanning & Enumeration",
-        "Vulnerability Assessment",
-        "Exploitation (Buffer Overflows, Web Shells)",
-        "Privilege Escalation"
-      ],
-      tools: ["Nmap", "Metasploit", "Burp Suite", "Hydra", "John the Ripper"],
-      tasks: [
-        { title: "Complete the 'Pre-Security' path on TryHackMe", type: "Lab" },
-        { title: "Hack your first machine on HackTheBox", type: "Lab" },
-        { title: "Perform a SQL Injection attack (in a lab)", type: "Lab" }
-      ],
-      resources: [
-        { name: "TryHackMe", url: "https://tryhackme.com" },
-        { name: "HackTheBox", url: "https://hackthebox.com" },
-        { name: "PortSwigger Academy", url: "#" }
-      ]
-    },
-    color: "slate"
-  },
-  {
-    id: 6,
-    title: "Blue Team Ops",
-    subtitle: "Incident Response",
-    icon: AlertTriangle,
-    status: "LOCKED",
-    summary: "Detect, analyze, and neutralize active threats.",
-    details: {
-      concepts: [
-        "SIEM (Security Information & Event Management)",
-        "IDS / IPS Configuration",
-        "Digital Forensics",
-        "Malware Analysis Basics",
-        "Threat Hunting"
-      ],
-      tools: ["Splunk", "Wazuh", "Snort", "Autopsy", "YARA"],
-      tasks: [
-        { title: "Analyze a PCAP file for malware traffic", type: "Lab" },
-        { title: "Set up a Wazuh agent", type: "Lab" },
-        { title: "Investigate a Windows Event Log", type: "Lab" }
-      ],
-      resources: [
-        { name: "LetsDefend.io", url: "#" },
-        { name: "Blue Team Labs Online", url: "#" }
-      ]
-    },
-    color: "slate"
-  },
-  {
-    id: 7,
-    title: "Advanced Warfare",
-    subtitle: "Specialization",
-    icon: Cloud,
-    status: "LOCKED",
-    summary: "Elite level operations in specialized domains.",
-    details: {
-      concepts: [
-        "Cloud Security (AWS/Azure/GCP)",
-        "DevSecOps Pipelines",
-        "Zero Trust Architecture",
-        "Advanced Persistent Threats (APTs)"
-      ],
-      tools: ["Docker", "Kubernetes", "Terraform", "CloudWatch"],
-      tasks: [
-        { title: "Secure an AWS S3 Bucket", type: "Lab" },
-        { title: "Audit a Docker Container", type: "Lab" },
-        { title: "Obtain CISSP or OSCP Certification", type: "Goal" }
-      ],
-      resources: [
-        { name: "Cloud Security Alliance", url: "#" },
-        { name: "OffSec (OSCP)", url: "#" }
-      ]
-    },
-    color: "purple"
-  }
+  { id: 1, title: "IT Fundamentals", subtitle: "Architecture", icon: Cpu, status: "COMPLETED", summary: "Master computer architecture, OS basics, and filesystems.", details: { concepts: ["RAM/CPU Architecture", "Kernel vs User Space", "NTFS/EXT4 Filesystems"], tools: ["VirtualBox", "PowerShell"], tasks: [{ title: "Build a Custom VM", type: "Lab" }], resources: [{ name: "Professor Messer A+", url: "#" }] }, category: "FOUNDATION" },
+  { id: 2, title: "Networking Basics", subtitle: "Data Flow", icon: Globe, status: "COMPLETED", summary: "Understand TCP/IP, OSI Model, and Subnetting.", details: { concepts: ["OSI 7 Layers", "Subnet Masking", "IPv4/IPv6"], tools: ["Wireshark", "Packet Tracer"], tasks: [{ title: "Capture TCP Handshake", type: "Lab" }], resources: [{ name: "CompTIA Network+", url: "#" }] }, category: "FOUNDATION" },
+  { id: 3, title: "Linux Mastery", subtitle: "Kernel Ops", icon: Terminal, status: "COMPLETED", summary: "Master the command line, permissions, and file structures.", details: { concepts: ["Sudoers & Permissions", "SSH Configuration", "Bash Scripting"], tools: ["Ubuntu", "Kali", "Tmux"], tasks: [{ title: "Permission Escalation Lab", type: "Lab" }], resources: [{ name: "Linux Journey", url: "https://linuxjourney.com/" }] }, category: "FOUNDATION" },
+  { id: 4, title: "Windows Internals", subtitle: "OS Logic", icon: Monitor, status: "COMPLETED", summary: "Deep dive into Registry, Active Directory, and Win-API.", details: { concepts: ["Registry Keys", "Active Directory Tree", "Group Policy"], tools: ["Sysinternals", "AD Explorer"], tasks: [{ title: "Analyze Registry Changes", type: "Lab" }], resources: [{ name: "Microsoft Learn AD", url: "#" }] }, category: "FOUNDATION" },
+  { id: 5, title: "Scripting Basics", subtitle: "Automation", icon: FileCode, status: "COMPLETED", summary: "Automate security tasks using Bash and Python.", details: { concepts: ["Python Requests", "Scapy Packet Manipulation", "Variables & Loops"], tools: ["Python 3", "VS Code"], tasks: [{ title: "Build a Port Scanner", type: "Code" }], resources: [{ name: "Automate Boring Stuff", url: "#" }] }, category: "FOUNDATION" },
+  { id: 6, title: "Adv. Networking", subtitle: "Infrastructure", icon: Radio, status: "COMPLETED", summary: "Routing, Switching, DNS, DHCP, and Firewalls.", details: { concepts: ["BGP/OSPF Routing", "NAT/PAT", "VLAN Segmentation"], tools: ["GNS3", "pfSense"], tasks: [{ title: "Setup a Firewall Rulebase", type: "Lab" }], resources: [{ name: "Cisco DevNet", url: "#" }] }, category: "DEFENSE" },
+  { id: 7, title: "Security Core", subtitle: "Blueprints", icon: Shield, status: "COMPLETED", summary: "The CIA Triad, Risk Management, and Compliance.", details: { concepts: ["CIA Triad", "NIST Framework", "ISO 27001"], tools: ["OpenSSL", "KeePass"], tasks: [{ title: "Risk Assessment Report", type: "Theory" }], resources: [{ name: "CompTIA Security+", url: "#" }] }, category: "DEFENSE" },
+  { id: 8, title: "Web Tech", subtitle: "The Matrix", icon: Globe, status: "COMPLETED", summary: "HTTP/HTTPS protocols, cookies, sessions, and APIs.", details: { concepts: ["HTTP Headers", "REST APIs", "CORS/SOP"], tools: ["Postman", "DevTools"], tasks: [{ title: "Intercept API Traffic", type: "Lab" }], resources: [{ name: "MDN Web Docs", url: "#" }] }, category: "DEFENSE" },
+  { id: 9, title: "Web App Security", subtitle: "OWASP Top 10", icon: Lock, status: "COMPLETED", summary: "Authentication, Authorization, and Input Validation.", details: { concepts: ["OWASP Top 10", "JWT Security", "OAuth Flows"], tools: ["Burp Suite", "OWASP ZAP"], tasks: [{ title: "Analyze Broken Auth", type: "Lab" }], resources: [{ name: "PortSwigger Academy", url: "#" }] }, category: "DEFENSE" },
+  { id: 10, title: "Recon & OSINT", subtitle: "Intel Gathering", icon: Search, status: "COMPLETED", summary: "Information gathering, Google Dorking, and OSINT tools.", details: { concepts: ["Passive Recon", "DNS Enumeration", "Metadata Analysis"], tools: ["Maltego", "theHarvester", "Shodan"], tasks: [{ title: "Trace a Target Domain", type: "OSINT" }], resources: [{ name: "IntelTechniques", url: "#" }] }, category: "OFFENSE" },
+  { id: 11, title: "Vuln Assessment", subtitle: "Scanning", icon: AlertTriangle, status: "COMPLETED", summary: "Scanning techniques, CVE, CVSS, and Nessus.", details: { concepts: ["CVSS Scoring", "False Positives", "CVE Research"], tools: ["Nessus", "OpenVAS"], tasks: [{ title: "Full Network Scan", type: "Lab" }], resources: [{ name: "NIST NVD", url: "#" }] }, category: "OFFENSE" },
+  { id: 12, title: "Network Attacks", subtitle: "Interception", icon: Radio, status: "COMPLETED", summary: "MITM attacks, DNS Spoofing, and ARP Poisoning.", details: { concepts: ["ARP Poisoning", "SSL Stripping", "Packet Injection"], tools: ["Ettercap", "Bettercap"], tasks: [{ title: "Perform an ARP Spoof", type: "Lab" }], resources: [{ name: "Hackers-Arise", url: "#" }] }, category: "OFFENSE" },
+  { id: 13, title: "Exploitation", subtitle: "Breaching", icon: Database, status: "COMPLETED", summary: "Metasploit Framework, payloads, and shells.", details: { concepts: ["Staged vs Non-staged Payloads", "Reverse Shells", "MSFvenom"], tools: ["Metasploit", "Netcat"], tasks: [{ title: "Exploit a Win7 Lab", type: "Lab" }], resources: [{ name: "Metasploit Unleashed", url: "#" }] }, category: "OFFENSE" },
+  { id: 14, title: "Web Exploitation", subtitle: "Injection", icon: Bug, status: "COMPLETED", summary: "SQL Injection, XSS, CSRF, and File Inclusion.", details: { concepts: ["Union-based SQLi", "Stored XSS", "LFI/RFI"], tools: ["sqlmap", "Burp Intruder"], tasks: [{ title: "Bypass Login with SQLi", type: "Lab" }], resources: [{ name: "TryHackMe Web", url: "#" }] }, category: "OFFENSE" },
+  { id: 15, title: "PrivEsc", subtitle: "God Mode", icon: Workflow, status: "COMPLETED", summary: "Escalate from standard user to Root/System.", details: { concepts: ["SUID Bit Exploits", "Kernel Exploits", "Token Manipulation"], tools: ["LinPeas", "WinPeas"], tasks: [{ title: "Escalate Linux Standard", type: "Lab" }], resources: [{ name: "HackTricks", url: "#" }] }, category: "OFFENSE" },
+  { id: 16, title: "Wireless Security", subtitle: "Airborne", icon: Radio, status: "COMPLETED", summary: "Wi-Fi protocols, Handshake attacks, and Evil Twin.", details: { concepts: ["WPA2/WPA3 Cracking", "WPS Pin Attacks", "PMKID"], tools: ["Aircrack-ng", "Wifite"], tasks: [{ title: "Crack WPA2 Handshake", type: "Lab" }], resources: [{ name: "Pentester Academy", url: "#" }] }, category: "ADVANCED" },
+  { id: 17, title: "Malware Analysis", subtitle: "Viruses", icon: AlertTriangle, status: "COMPLETED", summary: "Static and Dynamic analysis of malicious code.", details: { concepts: ["PE Header Analysis", "Sandboxing", "Obfuscation"], tools: ["Ghidra", "Cuckoo Sandbox"], tasks: [{ title: "Analyze a Ransomware Sample", type: "Lab" }], resources: [{ name: "Practical Malware Analysis", url: "#" }] }, category: "ADVANCED" },
+  { id: 18, title: "Blue Team Ops", subtitle: "Defense", icon: Shield, status: "COMPLETED", summary: "SIEM basics, log analysis, and incident response.", details: { concepts: ["Log Aggregation", "Triage", "Digital Forensics"], tools: ["Splunk", "ELK Stack"], tasks: [{ title: "Build a SOC Dashboard", type: "Lab" }], resources: [{ name: "LetsDefend", url: "#" }] }, category: "ADVANCED" },
+  { id: 19, title: "Red Teaming", subtitle: "War Games", icon: Target, status: "COMPLETED", summary: "Attack chains, lateral movement, and C2 infrastructure.", details: { concepts: ["MITRE ATT&CK Framework", "C2 Servers", "Persistence"], tools: ["Sliver", "Cobalt Strike"], tasks: [{ title: "Simulate an APT Chain", type: "RedTeam" }], resources: [{ name: "RedTeam Ops", url: "#" }] }, category: "ADVANCED" },
+  { id: 20, title: "Cloud & Zero Trust", subtitle: "Elite Level", icon: Cloud, status: "COMPLETED", summary: "Cloud security, Zero Trust, and Bug Bounty.", details: { concepts: ["AWS/Azure IAM", "Zero Trust Policy", "Vulnerability Disclosure"], tools: ["Terraform", "Docker"], tasks: [{ title: "Secure a Kubernetes Cluster", type: "Lab" }], resources: [{ name: "Cloud Security Alliance", url: "#" }] }, category: "ADVANCED" },
 ];
 
 export default function Roadmap() {
   const [selectedLevel, setSelectedLevel] = useState<typeof levels[0] | null>(null);
 
+  // Helper to get color styles based on category to match the image
+  const getNodeStyles = (category: string, status: string) => {
+    // Base styles mimicking the flowchart nodes
+    const base = "border-2 shadow-[0_4px_0_rgba(0,0,0,0.3)] transition-all duration-200";
+    
+    // NOTE: Since all statuses are COMPLETED, this LOCKED check will simply be skipped,
+    // allowing the colors below to show for every node.
+    if (status === "LOCKED") return `${base} bg-zinc-800 border-zinc-700 text-zinc-500 grayscale opacity-70`;
+
+    switch(category) {
+      case "FOUNDATION": return `${base} bg-amber-400 border-amber-500 text-zinc-900 hover:bg-amber-300`; // Yellow nodes
+      case "DEFENSE": return `${base} bg-rose-400 border-rose-500 text-white hover:bg-rose-300`; // Pink nodes
+      case "OFFENSE": return `${base} bg-cyan-400 border-cyan-500 text-zinc-900 hover:bg-cyan-300`; // Blue nodes
+      case "ADVANCED": return `${base} bg-indigo-500 border-indigo-600 text-white hover:bg-indigo-400`; // Purple nodes
+      default: return `${base} bg-white border-zinc-200 text-zinc-900`;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-foreground relative overflow-hidden font-sans selection:bg-primary/30">
+    <div className="min-h-screen bg-[#0a0a20] text-foreground relative overflow-hidden font-sans pb-32">
       <Navbar />
       
-      {/* Starfield Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.03),transparent_70%)]" />
-        <div className="absolute w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
+      {/* Deep Blue Background */}
+      <div className="fixed inset-0 z-0 bg-[#0a0a20]">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
       </div>
 
-      <section className="relative z-10 pt-32 pb-20">
-        <div className="container-custom max-w-5xl mx-auto">
+      <section className="relative z-10 pt-32">
+        <div className="container-custom max-w-6xl mx-auto">
           
-          {/* Header */}
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-24"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(var(--primary),0.3)] animate-pulse">
-              <Terminal className="w-4 h-4" />
-              Mission Progression
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50">
-              Cyber <span className="text-primary">Roadmap</span>
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-20">
+            <Badge variant="outline" className="mb-4 border-amber-400/50 text-amber-400 uppercase tracking-widest bg-amber-400/10">
+              Structured Learning Path
+            </Badge>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-white">
+              Cybersecurity <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400">Roadmap</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Select a mission node to access detailed intelligence, training modules, and field objectives.
+            <p className="text-zinc-400 max-w-2xl mx-auto">
+              Follow the tactical flowchart from IT Fundamentals to Elite Cloud Security Operations.
             </p>
           </motion.div>
 
-          {/* Game Map Container */}
-          <div className="relative w-full max-w-3xl mx-auto min-h-[800px]">
+          {/* Flowchart Layout */}
+          <div className="relative w-full flex flex-col items-center">
             
-            {/* SVG Connector Line */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden md:block" style={{ filter: 'drop-shadow(0 0 10px rgba(56,189,248,0.3))' }}>
-              <defs>
-                <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#10b981" />
-                  <stop offset="40%" stopColor="#3b82f6" />
-                  <stop offset="100%" stopColor="#334155" />
-                </linearGradient>
-              </defs>
-              <path 
-                d="M 150 100 Q 400 100 650 250 T 150 400 T 650 550 T 150 700 T 400 850" 
-                fill="none" 
-                stroke="url(#pathGradient)" 
-                strokeWidth="4" 
-                strokeDasharray="10 5"
-                strokeLinecap="round"
-                className="opacity-50"
-              />
-            </svg>
+            {/* Central Connector Line (Circuit Style) */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-zinc-700/50 -translate-x-1/2 hidden md:block"></div>
 
-            {/* Level Nodes */}
-            <div className="relative z-10 space-y-16 md:space-y-0">
-              
+            <div className="w-full space-y-16 relative">
               {levels.map((level, index) => {
-                const positions = [
-                  "md:top-[50px] md:left-[100px]",
-                  "md:top-[200px] md:left-[600px]",
-                  "md:top-[350px] md:left-[100px]",
-                  "md:top-[500px] md:left-[600px]",
-                  "md:top-[650px] md:left-[100px]",
-                  "md:top-[800px] md:left-[500px]",
-                  "md:top-[900px] md:left-[350px]",
-                ];
-
-                const isCompleted = level.status === "COMPLETED";
-                const isActive = level.status === "ACTIVE";
-                const isLocked = level.status === "LOCKED";
+                const styles = getNodeStyles(level.category, level.status);
+                const isEven = index % 2 === 0;
 
                 return (
                   <motion.div
                     key={level.id}
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: index * 0.1, type: "spring" }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className={`relative md:absolute ${positions[index]} flex flex-col items-center group w-full md:w-auto cursor-pointer`}
-                    onClick={() => setSelectedLevel(level)}
+                    className={`relative flex items-center w-full ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
                   >
-                    {/* Level Orb */}
-                    <div className={`
-                      relative w-24 h-24 rounded-full flex items-center justify-center border-4 shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all duration-500 z-20 hover:scale-110
-                      ${isCompleted ? 'bg-background border-emerald-500 shadow-emerald-500/30' : ''}
-                      ${isActive ? 'bg-background border-blue-500 shadow-blue-500/50 scale-110' : ''}
-                      ${isLocked ? 'bg-muted/10 border-muted-foreground/30 grayscale opacity-70' : ''}
-                    `}>
-                      <level.icon className={`
-                        w-10 h-10 transition-colors duration-300
-                        ${isCompleted ? 'text-emerald-500' : ''}
-                        ${isActive ? 'text-blue-500 animate-pulse' : ''}
-                        ${isLocked ? 'text-muted-foreground/50' : ''}
-                      `} />
-
-                      {isActive && (
-                        <>
-                          <div className="absolute inset-0 rounded-full border border-blue-500 animate-ping opacity-20" />
-                          <div className="absolute -inset-4 rounded-full border border-blue-500/30 animate-pulse" />
-                        </>
-                      )}
-
-                      {/* Number Badge */}
-                      <div className={`
-                        absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2
-                        ${isCompleted ? 'bg-emerald-500 border-emerald-600 text-black' : ''}
-                        ${isActive ? 'bg-blue-500 border-blue-600 text-white' : ''}
-                        ${isLocked ? 'bg-muted border-muted-foreground text-muted-foreground' : ''}
-                      `}>
-                        {level.id}
-                      </div>
+                    
+                    {/* Connector Arm (Horizontal) */}
+                    <div className={`hidden md:block absolute top-1/2 w-1/2 h-1 bg-zinc-700/50 -z-10 ${isEven ? 'right-1/2 origin-right' : 'left-1/2 origin-left'}`} />
+                    
+                    {/* Text Label Side */}
+                    <div className={`flex-1 hidden md:flex flex-col justify-center px-8 ${isEven ? 'items-end text-right' : 'items-start text-left'}`}>
+                       <h3 className="text-xl font-bold text-white mb-1">{level.category} PHASE</h3>
+                       <p className="text-zinc-500 text-sm font-mono uppercase tracking-widest">Level {String(level.id).padStart(2, '0')}</p>
                     </div>
 
-                    {/* Label */}
-                    <div className={`
-                      mt-4 text-center transition-all duration-300
-                      ${isActive ? 'opacity-100 scale-110' : 'opacity-80 group-hover:opacity-100 group-hover:scale-105'}
-                      ${isLocked ? 'opacity-50' : ''}
-                    `}>
-                      <h3 className={`text-xl font-bold ${isCompleted ? 'text-emerald-400' : isActive ? 'text-blue-400' : 'text-muted-foreground'}`}>
-                        {level.title}
-                      </h3>
-                      <p className="text-xs uppercase tracking-widest font-semibold text-muted-foreground">
-                        {level.subtitle}
-                      </p>
-                      <span className="text-[10px] text-primary/80 mt-1 block group-hover:underline">
-                        Click for Intel
-                      </span>
+                    {/* The Node (Flowchart Pill) */}
+                    <div className="relative z-10 flex-shrink-0 mx-auto md:mx-0">
+                      <motion.div 
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setSelectedLevel(level)}
+                        className={`
+                          w-[280px] md:w-[320px] p-1 rounded-2xl cursor-pointer group
+                          ${level.status === "ACTIVE" ? 'ring-4 ring-white/20' : ''}
+                        `}
+                      >
+                        <div className={`
+                          ${styles} rounded-xl p-5 flex items-center gap-4 relative overflow-hidden
+                        `}>
+                          {/* Inner Shine */}
+                          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
+
+                          <div className="p-3 rounded-lg bg-black/10 backdrop-blur-sm">
+                            <level.icon className="w-6 h-6" />
+                          </div>
+                          
+                          <div className="flex-1">
+                            <h4 className="font-bold text-lg leading-tight">{level.title}</h4>
+                            <p className="text-xs font-mono opacity-80 uppercase mt-1 tracking-wider">{level.subtitle}</p>
+                          </div>
+
+                          {/* Since all are completed, this checkmark will appear on all nodes */}
+                          {level.status === "COMPLETED" && <CheckCircle2 className="w-5 h-5 opacity-70" />}
+                          {level.status === "LOCKED" && <Lock className="w-4 h-4 opacity-50" />}
+                        </div>
+                      </motion.div>
                     </div>
+
+                    {/* Empty Side for Layout Balance */}
+                    <div className="flex-1 hidden md:block" />
 
                   </motion.div>
                 );
               })}
-
-              {/* Final Flag */}
-              <motion.div 
-                className="relative md:absolute md:top-[980px] md:left-[350px] w-full flex justify-center pt-12 md:pt-0"
-              >
-                <div className="flex flex-col items-center opacity-80">
-                  <Flag className="w-12 h-12 text-yellow-500 mb-2 animate-bounce" />
-                </div>
-              </motion.div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Detail Sheet */}
+      {/* Completion Flag */}
+      <div className="mt-24 text-center">
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-indigo-500/20 border-2 border-indigo-500 mb-6 animate-bounce">
+          <Flag className="w-8 h-8 text-indigo-400" />
+        </div>
+        <h2 className="text-2xl font-bold text-white">Roadmap Complete</h2>
+        <p className="text-zinc-500">Ready for Advanced Specialization</p>
+      </div>
+
+      {/* Details Sheet - Updated Style */}
       <Sheet open={!!selectedLevel} onOpenChange={() => setSelectedLevel(null)}>
-        <SheetContent className="w-[400px] sm:w-[540px] border-l border-primary/20 bg-background/95 backdrop-blur-xl overflow-y-auto">
+        <SheetContent className="w-[400px] sm:w-[540px] border-l border-white/10 bg-[#0f0f2a] text-white overflow-y-auto">
           {selectedLevel && (
             <>
-              <SheetHeader className="mb-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <Badge variant="outline" className={`
-                    ${selectedLevel.status === 'COMPLETED' ? 'border-emerald-500 text-emerald-500' : ''}
-                    ${selectedLevel.status === 'ACTIVE' ? 'border-blue-500 text-blue-500' : ''}
-                    ${selectedLevel.status === 'LOCKED' ? 'border-muted text-muted-foreground' : ''}
+              <SheetHeader className="mb-6 pb-6 border-b border-white/10">
+                <div className="flex items-center gap-3 mb-4">
+                  <Badge className={`
+                     ${selectedLevel.category === 'FOUNDATION' ? 'bg-amber-400 text-black' : ''}
+                     ${selectedLevel.category === 'DEFENSE' ? 'bg-rose-400 text-white' : ''}
+                     ${selectedLevel.category === 'OFFENSE' ? 'bg-cyan-400 text-black' : ''}
+                     ${selectedLevel.category === 'ADVANCED' ? 'bg-indigo-500 text-white' : ''}
                   `}>
-                    STATUS: {selectedLevel.status}
+                    {selectedLevel.category}
                   </Badge>
-                  <span className="text-xs text-muted-foreground font-mono">ID: SEC-LVL-{selectedLevel.id}00</span>
+                  <span className="text-xs text-zinc-400 font-mono">ID: {selectedLevel.id}</span>
                 </div>
-                <SheetTitle className="text-3xl font-bold flex items-center gap-3">
-                  <selectedLevel.icon className="w-8 h-8 text-primary" />
+                <SheetTitle className="text-3xl font-bold flex items-center gap-3 text-white">
                   {selectedLevel.title}
                 </SheetTitle>
-                <SheetDescription className="text-base text-muted-foreground/90">
+                <SheetDescription className="text-zinc-400 text-base">
                   {selectedLevel.summary}
                 </SheetDescription>
               </SheetHeader>
 
               <div className="space-y-8">
-                
                 {/* 1. Concepts */}
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4" /> Intel / Concepts
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4" /> Core Concepts
                   </h4>
                   <div className="grid grid-cols-1 gap-2">
-                    {selectedLevel.details.concepts.map((concept, i) => (
-                      <div key={i} className="p-3 rounded-lg bg-secondary/5 border border-white/5 text-sm flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                        {concept}
+                    {selectedLevel.details.concepts.map((c, i) => (
+                      <div key={i} className="p-3 rounded bg-white/5 border border-white/5 text-sm text-zinc-300">
+                        {c}
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* 2. Tools */}
+                {/* 2. Arsenal */}
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
-                    <Terminal className="w-4 h-4" /> Required Arsenal
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3 flex items-center gap-2">
+                    <Terminal className="w-4 h-4" /> Toolset
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {selectedLevel.details.tools.map((tool, i) => (
-                      <Badge key={i} variant="secondary" className="bg-primary/5 text-primary border-primary/10">
-                        {tool}
+                    {selectedLevel.details.tools.map((t, i) => (
+                      <Badge key={i} variant="secondary" className="bg-white/10 text-white border-white/10 hover:bg-white/20">
+                        {t}
                       </Badge>
                     ))}
                   </div>
                 </div>
 
-                {/* 3. Tasks */}
+                {/* 3. Objectives */}
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" /> Mission Objectives
-                  </h4>
-                  <div className="space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-3">Objectives</h4>
+                  <div className="space-y-2">
                     {selectedLevel.details.tasks.map((task, i) => (
-                      <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-white/5 hover:bg-white/5 transition-colors group">
-                        <div className={`mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center 
-                          ${selectedLevel.status === 'COMPLETED' ? 'border-emerald-500 text-emerald-500' : 'border-muted-foreground/30 text-transparent'}
-                        `}>
-                          {selectedLevel.status === 'COMPLETED' && <CheckCircle2 className="w-3 h-3" />}
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-foreground">{task.title}</p>
-                          <span className="text-[10px] text-muted-foreground px-1.5 py-0.5 rounded bg-white/5 mt-1 inline-block">
-                            {task.type}
-                          </span>
-                        </div>
-                        <ChevronRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div key={i} className="flex items-center gap-3 p-3 rounded border border-white/10 bg-black/20 text-sm text-zinc-300">
+                        <CheckCircle2 className={`w-4 h-4 ${selectedLevel.status === 'COMPLETED' ? 'text-emerald-500' : 'text-zinc-700'}`} />
+                        {task.title}
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* 4. Resources */}
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2">
-                    <ExternalLink className="w-4 h-4" /> Data Uplinks
-                  </h4>
-                  <div className="grid grid-cols-1 gap-2">
-                    {selectedLevel.details.resources.map((res, i) => (
-                      <a 
-                        key={i} 
-                        href={res.url} 
-                        target="_blank" 
-                        rel="noreferrer"
-                        className="flex items-center justify-between p-3 rounded-lg bg-primary/5 border border-primary/10 hover:bg-primary/10 transition-colors"
-                      >
-                        <span className="text-sm font-medium text-primary">{res.name}</span>
-                        <ExternalLink className="w-3 h-3 text-primary/50" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  <Play className="w-4 h-4 mr-2" /> Start Training
+                {/* Action Button */}
+                <Button className="w-full bg-white text-black hover:bg-zinc-200 mt-4 font-bold h-12">
+                  <Play className="w-4 h-4 mr-2" /> 
+                  {selectedLevel.status === 'LOCKED' ? 'UNLOCK MODULE' : 'ACCESS MODULE'}
                 </Button>
               </div>
-
             </>
           )}
         </SheetContent>
       </Sheet>
-      
-      <Footer />
     </div>
   );
 }

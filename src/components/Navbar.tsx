@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { Shield, Menu, X, Moon, Sun, Map } from "lucide-react";
+import { Shield, Menu, X, Moon, Sun, Map, Zap, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 
+// Removed "Blog" from here to handle it separately
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
-  { label: "Blog", href: "/blog", isRoute: true },
   { label: "Contact", href: "#contact" }
 ];
 
@@ -40,10 +40,10 @@ export function Navbar() {
   const renderNavLink = (link: typeof navLinks[0], isMobile = false) => {
     const baseClasses = isMobile 
       ? "flex items-center justify-between px-4 py-3 text-foreground hover:bg-foreground/5 rounded-xl transition-colors w-full"
-      : "px-5 py-2 text-sm font-medium text-foreground/70 hover:text-primary transition-all rounded-full hover:bg-foreground/5";
+      : "px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary transition-all rounded-full hover:bg-foreground/5";
 
-    // 1. If it's a specific Route (like /blog), use standard Link
-    if (link.isRoute) {
+    // 1. If it's a specific Route, use standard Link
+    if (link.href.startsWith("/")) {
       return (
         <Link
           key={link.href}
@@ -116,7 +116,7 @@ export function Navbar() {
                 <Shield className="w-6 h-6 text-primary transition-transform group-hover:scale-110" />
               </div>
               <span className="text-xl font-bold tracking-tight text-foreground">
-                Sathish M
+                Sathish <span className="text-primary">M</span>
               </span>
             </Link>
           </div>
@@ -124,6 +124,24 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center bg-background/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-border">
             {navLinks.map((link) => renderNavLink(link, false))}
+
+            {/* Special BLOG Link with "Intelligence" Style */}
+            <Link 
+              to="/blog"
+              className={`relative ml-2 px-4 py-2 text-sm font-bold transition-all rounded-full flex items-center gap-2 group
+                ${location.pathname.startsWith('/blog') 
+                  ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(var(--primary),0.4)]" 
+                  : "text-primary bg-primary/10 hover:bg-primary/20"
+                }
+              `}
+            >
+              <span>Blog</span>
+              {/* Pulsing Dot */}
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+            </Link>
           </div>
 
           {/* Right Actions */}
@@ -182,6 +200,18 @@ export function Navbar() {
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => renderNavLink(link, true))}
               
+              {/* Mobile Blog Link */}
+              <Link
+                to="/blog"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center justify-between px-4 py-3 text-sm font-bold text-primary bg-primary/10 border border-primary/20 rounded-xl"
+              >
+                <span className="flex items-center gap-2">
+                  <Terminal className="w-4 h-4" /> Access Intelligence Logs
+                </span>
+                <Zap className="w-4 h-4 animate-pulse" />
+              </Link>
+
               <div className="h-px bg-border my-2" />
 
               <Link

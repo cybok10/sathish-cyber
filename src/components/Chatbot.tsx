@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, useMemo } from "react";
-import { MessageSquare, X, Send, Shield, Terminal, Lock, Activity, Server, Search, Database } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { MessageSquare, X, Send, Activity, Server, Terminal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -100,8 +100,8 @@ export function Chatbot() {
 
   return (
     <>
-      {/* Floating Toggle Button */}
-      <div className="fixed bottom-6 right-6 z-[1000]">
+      {/* Floating Toggle Button (MOVED TO LEFT) */}
+      <div className="fixed bottom-6 left-6 z-[1000]">
         <Button 
           onClick={() => setIsOpen(!isOpen)} 
           className={`h-14 w-14 rounded-full shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500 border-0 ${isOpen ? "bg-red-500/80 rotate-90" : "bg-primary shadow-primary/40"}`}
@@ -113,13 +113,14 @@ export function Chatbot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            initial={{ opacity: 0, scale: 0.9, y: 30, originX: 0, originY: 1 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30 }}
-            className="fixed bottom-24 right-6 w-[380px] md:w-[440px] h-[600px] bg-[#050508]/95 border border-primary/20 rounded-3xl shadow-2xl z-[1000] flex flex-col overflow-hidden backdrop-blur-2xl"
+            // MOVED WINDOW TO LEFT
+            className="fixed bottom-24 left-6 w-[340px] md:w-[400px] h-[550px] bg-[#050508]/95 border border-primary/20 rounded-3xl shadow-2xl z-[1000] flex flex-col overflow-hidden backdrop-blur-2xl"
           >
             {/* Tactical Header */}
-            <header className="p-5 border-b border-white/10 bg-white/5 flex items-center justify-between">
+            <header className="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative">
                    <div className="absolute inset-0 bg-primary/20 blur-md rounded-full animate-pulse" />
@@ -139,25 +140,25 @@ export function Chatbot() {
             </header>
 
             {/* Scrolling Chat Interface */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-6 custom-scrollbar bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.05)_0%,transparent_70%)]">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.05)_0%,transparent_70%)]">
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.sender === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-[88%] p-4 rounded-2xl text-[13px] leading-relaxed shadow-lg ${
+                  <div className={`max-w-[88%] p-3 rounded-2xl text-[12px] leading-relaxed shadow-lg ${
                     m.sender === "user" 
                     ? "bg-primary text-white rounded-tr-none border border-white/10" 
                     : "bg-white/5 border border-white/10 text-slate-300 rounded-tl-none font-mono"
                   }`}>
-                    {m.sender === "bot" && <div className="text-[10px] text-primary/60 mb-2 border-b border-white/5 pb-1">INTERNAL_INTEL_LOG</div>}
+                    {m.sender === "bot" && <div className="text-[9px] text-primary/60 mb-1 border-b border-white/5 pb-1">INTERNAL_INTEL_LOG</div>}
                     <p className="whitespace-pre-wrap">{m.text}</p>
                     
                     {/* Dynamic Suggestions */}
                     {m.suggestions && (
-                      <div className="mt-4 flex flex-wrap gap-2 pt-3 border-t border-white/5">
+                      <div className="mt-3 flex flex-wrap gap-2 pt-2 border-t border-white/5">
                         {m.suggestions.map((s) => (
                           <button 
                             key={s} 
                             onClick={() => executeCommand(s)}
-                            className="text-[10px] px-3 py-1.5 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary/20 hover:border-primary transition-all text-primary font-bold tracking-tighter"
+                            className="text-[9px] px-2 py-1 rounded border border-primary/20 bg-primary/5 hover:bg-primary/20 hover:border-primary transition-all text-primary font-bold tracking-tighter"
                           >
                             {s}
                           </button>
@@ -176,7 +177,7 @@ export function Chatbot() {
             </div>
 
             {/* Terminal Command Input */}
-            <footer className="p-4 bg-white/5 border-t border-white/10">
+            <footer className="p-3 bg-white/5 border-t border-white/10">
               <div className="flex gap-2 p-1 bg-black/40 rounded-xl border border-white/10 focus-within:border-primary/50 transition-colors">
                 <div className="flex items-center pl-3">
                   <Terminal className="w-3.5 h-3.5 text-primary" />
