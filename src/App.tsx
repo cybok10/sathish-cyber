@@ -12,21 +12,26 @@ import NotFound from "./pages/NotFound";
 import { Chatbot } from "@/components/Chatbot";
 import { Footer } from "@/components/Footer";
 import { LatestBlogPopup } from "@/components/LatestBlogPopup";
+import { CyberBackground, useMousePosition } from "@/components/CyberBackground";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
-  
-  // Use .toLowerCase() and .startsWith() to ensure the check is bulletproof
   const isRoadmapPage = location.pathname.toLowerCase().startsWith("/roadmap");
+
+  useMousePosition();
 
   return (
     <>
+      <CyberBackground />
       <Routes>
         <Route path="/" element={<Index />} />
+        
+        {/* Blog Routes */}
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -34,8 +39,7 @@ const AppContent = () => {
       <LatestBlogPopup />
       <Chatbot />
       
-      {/* If this is the Roadmap page, we hide the entire footer component */}
-      {!isRoadmapPage && <Footer />}
+      <Footer />
     </>
   );
 };

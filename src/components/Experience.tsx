@@ -28,95 +28,90 @@ const experiences = [
 
 export function Experience() {
   return (
-    <section id="experience" className="section-padding relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] -z-10" />
+    <section id="experience" className="section-padding relative overflow-hidden bg-background">
+      <div className="container-custom relative z-10 w-full">
 
-      <div className="container-custom relative z-10">
-        
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Professional <span className="text-gradient">Experience</span>
-          </h2>
-          <div className="h-1 w-24 mx-auto rounded-full bg-gradient-to-r from-primary/50 via-primary to-primary/50" />
-        </motion.div>
+        <div className="flex flex-col xl:flex-row justify-between gap-16 items-end mb-24 border-b border-white/5 pb-16">
+          <div className="xl:w-1/2 space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-primary font-black text-xs uppercase tracking-[0.4em] flex items-center gap-4"
+            >
+              <div className="w-12 h-[2px] bg-primary" />
+              Operational History
+            </motion.div>
+            <h2 className="text-5xl md:text-7xl font-display font-black tracking-tight text-foreground leading-[1.05]">
+              Strategic <br /> <span className="text-primary italic">Milestones.</span>
+            </h2>
+          </div>
+          <p className="xl:w-1/3 text-lg text-muted-foreground font-medium opacity-70 leading-relaxed">
+            A track record of identifying vulnerabilities and architecturing secure infrastructure in active environments.
+          </p>
+        </div>
 
-        <div className="max-w-5xl mx-auto relative">
-          
-          {/* Central Gradient Spine (Desktop) */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] md:-translate-x-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+        <div className="relative">
+          {/* Vertical Spine - Clean & Minimal */}
+          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-[1px] bg-white/5 md:-translate-x-px" />
 
-          <div className="space-y-12">
+          <div className="space-y-24">
             {experiences.map((exp, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className={`relative flex flex-col md:flex-row gap-8 md:gap-0 ${
-                  index % 2 === 0 ? 'md:flex-row-reverse' : ''
-                }`}
+                className={`relative flex flex-col md:flex-row items-center gap-12 md:gap-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
               >
-                {/* Timeline Node (Center) */}
-                <div className="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-0 w-3 h-3 md:w-4 md:h-4 rounded-full bg-background border-2 border-primary z-20 shadow-[0_0_10px_hsl(var(--primary))]">
-                  <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping opacity-75" />
-                </div>
+                {/* Timeline Dot */}
+                <div className="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-10 w-3 h-3 rounded-full bg-primary shadow-[0_0_15px_rgba(var(--primary),0.5)] z-20" />
 
-                {/* Spacer for Desktop Layout Balance */}
-                <div className="hidden md:block md:w-1/2" />
-
-                {/* Content Card */}
-                <div className={`md:w-1/2 pl-6 md:pl-0 ${
-                  index % 2 === 0 ? 'md:pl-12' : 'md:pr-12'
-                }`}>
-                  <div className="glass-card p-6 md:p-8 relative group hover:border-primary/30 transition-colors">
-                    
-                    {/* Decorative Corner Accent */}
-                    <div className={`absolute top-0 w-20 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent ${
-                       index % 2 === 0 ? 'left-0' : 'right-0'
-                    } opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                        {exp.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
-                        <Calendar className="w-3 h-3" />
-                        {exp.period}
+                {/* Content Area */}
+                <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pl-20' : 'md:pr-20'}`}>
+                  <div className="glass-card p-10 group border-white/5 hover:border-primary/20 transition-all duration-500">
+                    <div className="flex flex-col gap-6">
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        <span className="px-4 py-1.5 rounded-lg bg-secondary text-primary text-xs font-black uppercase tracking-widest border border-white/5">
+                          {exp.period}
+                        </span>
+                        <div className="flex items-center gap-2 text-muted-foreground font-mono text-xs opacity-50">
+                          <Briefcase className="w-3 h-3" />
+                          EXP_{index + 1}
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center gap-2 mb-4 text-muted-foreground">
-                      <Briefcase className="w-4 h-4 text-secondary" />
-                      <span className="font-medium text-foreground">{exp.company}</span>
-                    </div>
+                      <div className="space-y-3">
+                        <h3 className="text-2xl md:text-3xl font-display font-black text-foreground tracking-tight group-hover:text-primary transition-colors">
+                          {exp.title}
+                        </h3>
+                        <p className="text-lg font-bold text-foreground/60 italic tracking-tight">
+                          {exp.company}
+                        </p>
+                      </div>
 
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
-                      {exp.description}
-                    </p>
+                      <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                        {exp.description}
+                      </p>
 
-                    <div className="flex flex-wrap gap-2">
-                      {exp.tools.map((tool) => (
-                        <Badge 
-                          key={tool} 
-                          variant="secondary" 
-                          className="bg-secondary/5 text-secondary border-secondary/20 hover:bg-secondary/10 transition-colors"
-                        >
-                          {tool}
-                        </Badge>
-                      ))}
+                      <div className="flex flex-wrap gap-2 pt-8 border-t border-white/5">
+                        {exp.tools.map((tool) => (
+                          <Badge
+                            key={tool}
+                            variant="secondary"
+                            className="px-4 py-1.5 rounded-xl bg-primary/5 text-muted-foreground border-transparent hover:text-primary hover:bg-primary/10 transition-all duration-300 text-[10px] font-black uppercase tracking-widest"
+                          >
+                            {tool}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
 
+                {/* Empty Spacer for desktop staggered layout */}
+                <div className="hidden md:block md:w-1/2" />
               </motion.div>
             ))}
           </div>

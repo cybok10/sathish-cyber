@@ -1,141 +1,138 @@
 import { motion } from "framer-motion";
-import { Award, CheckCircle2, ShieldCheck, Calendar } from "lucide-react";
+import { Award, CheckCircle2, ShieldCheck, Calendar, Bookmark, Fingerprint, Lock, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const certifications = [
   {
     title: "Certified Penetration Testing",
     issuer: "RedTeam Hacker Academy",
-    date: "Ongoing",
+    date: "2025_EXP",
     id: "CPT-2025-X82",
-    status: "In Progress"
+    status: "Ongoing",
+    level: "Lv 4"
   },
   {
     title: "Advanced Ethical Hacking",
     issuer: "GUVI",
-    date: "Oct 2025",
+    date: "OCT_2025",
     id: "AEH-8821-V2",
-    status: "Completed"
+    status: "Completed",
+    level: "Lv 3"
   },
   {
-    title: "Cybersecurity & Ethical Hacking",
+    title: "Cybersecurity & Hacking",
     issuer: "Internship Studio",
-    date: "Aug 2024",
-    id: "CSEH-2024-001",
-    status: "Completed"
+    date: "AUG_2024",
+    id: "CSEH-24-01",
+    status: "Completed",
+    level: "Lv 3"
   },
   {
     title: "Wireshark & Metasploit",
     issuer: "Infosys Springboard",
-    date: "Dec 2024",
+    date: "DEC_2024",
     id: "INF-WM-992",
-    status: "Completed"
+    status: "Completed",
+    level: "Lv 2"
   },
   {
-    title: "Diploma in C & C++ Programming",
+    title: "C & C++ Programming",
     issuer: "TCEDS",
-    date: "Sep 2022",
+    date: "SEP_2022",
     id: "TCEDS-DEV-22",
-    status: "Completed"
+    status: "Completed",
+    level: "Lv 2"
   },
   {
-    title: "Linux, Network Security, Nmap",
+    title: "Linux & Network Security",
     issuer: "Udemy",
-    date: "2024",
+    date: "FY_2024",
     id: "UDMY-SEC-24",
-    status: "Completed"
+    status: "Completed",
+    level: "Lv 1"
   }
 ];
 
 export function Certifications() {
   return (
-    <section id="certifications" className="section-padding relative overflow-hidden">
+    <section id="certifications" className="section-padding relative overflow-hidden bg-black pb-40">
       
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[120px] -z-10" />
+      {/* Dynamic Background Overlay */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none flex items-center justify-center">
+         <Shield className="w-[800px] h-[800px] text-primary" />
+      </div>
 
-      <div className="container-custom relative z-10">
-        
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Professional <span className="text-gradient">Certifications</span>
-          </h2>
-          <div className="h-1 w-24 mx-auto rounded-full bg-gradient-to-r from-primary/50 via-primary to-primary/50" />
-          <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
-            Authorized credentials and technical qualifications.
-          </p>
-        </motion.div>
+      <div className="container-custom relative z-10 w-full">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certifications.map((cert, index) => (
-            <motion.div 
-              key={cert.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
+        <div className="flex flex-col xl:flex-row justify-between gap-20 items-end mb-32">
+          <div className="xl:w-1/2 space-y-10">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="group relative h-full"
+              className="text-primary font-black text-xs uppercase tracking-[0.5em] flex items-center gap-5"
             >
-              {/* Card */}
-              <div className="glass-card p-1 h-full hover:-translate-y-2 transition-transform duration-300">
-                <div className="bg-background/40 h-full rounded-xl p-6 relative overflow-hidden flex flex-col">
-                  
-                  {/* Top Decoration Line */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
+              <div className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-lg">Sector 04</div>
+              Operational Clearances
+            </motion.div>
+            <h2 className="text-6xl md:text-[7rem] font-display font-black tracking-tighter text-white leading-[0.9] italic">
+               SECURED <span className="text-primary not-italic">INTEL.</span>
+            </h2>
+          </div>
+          <div className="xl:w-1/3 text-xl text-zinc-500 font-medium leading-relaxed italic">
+            "Authenticated validation of technical capacity and authorized operational access."
+          </div>
+        </div>
 
-                  {/* Header: Icon & Date */}
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 text-primary shadow-[0_0_15px_hsl(var(--primary)/0.2)] group-hover:scale-110 transition-transform duration-300">
-                      <Award className="w-6 h-6" />
-                    </div>
-                    <Badge variant="outline" className="border-white/10 bg-white/5 text-xs font-mono">
-                      {cert.date}
-                    </Badge>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {certifications.map((cert, index) => (
+            <motion.div
+              key={cert.title}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: index * 0.05 }}
+              viewport={{ once: true }}
+              className="group relative flex flex-col h-full rounded-[2.5rem] bg-[#070715] border border-white/5 p-12 hover:border-primary/40 transition-all duration-500 overflow-hidden"
+            >
+               {/* Background Watermark Icon */}
+               <Fingerprint className="absolute -bottom-10 -right-10 w-48 h-48 text-primary opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
+
+               <div className="flex justify-between items-start mb-12 relative z-10">
+                  <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-500 group-hover:bg-primary group-hover:text-black transition-all duration-500">
+                    <ShieldCheck className="w-8 h-8" />
+                  </div>
+                  <div className="px-4 py-2 rounded-xl bg-primary/5 border border-primary/20 text-primary font-black text-[10px] uppercase tracking-widest flex items-center gap-2">
+                    <Lock className="w-3 h-3" />
+                    {cert.level} ACCESS
+                  </div>
+               </div>
+
+               <div className="space-y-4 mb-12 relative z-10">
+                  <h3 className="text-3xl font-display font-black text-white leading-[1.1] group-hover:text-primary transition-colors tracking-tighter italic">
+                    {cert.title}
+                  </h3>
+                  <div className="text-zinc-500 font-bold text-sm tracking-tight flex items-center gap-2">
+                    <Bookmark className="w-4 h-4 text-primary opacity-50" />
+                    {cert.issuer}
+                  </div>
+               </div>
+
+               <div className="mt-auto pt-10 border-t border-white/5 flex items-center justify-between relative z-10">
+                  <div className="space-y-2">
+                    <div className="text-[9px] uppercase tracking-[0.3em] text-zinc-600 font-black">VALIDATION_ID</div>
+                    <div className="text-xs font-mono font-bold text-zinc-400 group-hover:text-zinc-200 transition-colors uppercase">{cert.id}</div>
                   </div>
 
-                  {/* Content */}
-                  <div className="mb-6 flex-grow">
-                    <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                      {cert.title}
-                    </h3>
-                    <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                      <ShieldCheck className="w-4 h-4 text-secondary/70" />
-                      <span>{cert.issuer}</span>
-                    </div>
+                  <div className="flex flex-col items-end gap-2">
+                     <div className="text-[9px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-1">AUTH_DATE</div>
+                     <span className="text-xs font-black text-white italic">{cert.date}</span>
                   </div>
+               </div>
 
-                  {/* Footer: ID & Verified Status */}
-                  <div className="pt-4 mt-auto border-t border-white/5 flex items-center justify-between">
-                    <div className="flex flex-col">
-                      <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Credential ID</span>
-                      <span className="text-xs font-mono text-primary/80">{cert.id}</span>
-                    </div>
-                    
-                    {cert.status === "Ongoing" ? (
-                       <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-[10px] font-medium text-yellow-500">
-                         <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
-                         In Progress
-                       </div>
-                    ) : (
-                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-medium text-emerald-500">
-                        <CheckCircle2 className="w-3 h-3" />
-                        Verified
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Hover Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500" />
-                </div>
-              </div>
+               {/* Verification Stamp Overlay */}
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-10 transition-all duration-700 pointer-events-none scale-150 rotate-12">
+                  <div className="px-8 py-4 border-8 border-primary rounded-3xl text-9xl font-display font-black text-primary">SECURED</div>
+               </div>
             </motion.div>
           ))}
         </div>

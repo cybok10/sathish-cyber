@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { Shield, Menu, X, Moon, Sun, Map, Zap, Terminal } from "lucide-react";
+import { Shield, Menu, X, Moon, Sun, Map, Zap, Terminal, Sword, Activity } from "lucide-react"; // Added Sword and Activity
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
 
-// Removed "Blog" from here to handle it separately
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
@@ -34,15 +33,21 @@ export function Navbar() {
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollToSection = (id: string) => {
+    handleNavClick(`#${id}`);
+  };
+
   const isHomePage = location.pathname === "/";
 
-  // Helper to render the correct link type
   const renderNavLink = (link: typeof navLinks[0], isMobile = false) => {
-    const baseClasses = isMobile 
+    const baseClasses = isMobile
       ? "flex items-center justify-between px-4 py-3 text-foreground hover:bg-foreground/5 rounded-xl transition-colors w-full"
       : "px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary transition-all rounded-full hover:bg-foreground/5";
 
-    // 1. If it's a specific Route, use standard Link
     if (link.href.startsWith("/")) {
       return (
         <Link
@@ -56,7 +61,6 @@ export function Navbar() {
       );
     }
 
-    // 2. If we are NOT on Home, and it's an anchor (#about), link to /#about
     if (!isHomePage) {
       return (
         <Link
@@ -70,14 +74,13 @@ export function Navbar() {
       );
     }
 
-    // 3. If we ARE on Home, use scroll behavior
     return (
       <a
         key={link.href}
         href={link.href}
-        onClick={(e) => { 
-          e.preventDefault(); 
-          handleNavClick(link.href); 
+        onClick={(e) => {
+          e.preventDefault();
+          handleNavClick(link.href);
         }}
         className={baseClasses}
       >
@@ -88,87 +91,96 @@ export function Navbar() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pointer-events-none">
-      <nav 
+      <nav
         className={`
           pointer-events-auto
-          w-full max-w-7xl rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]
-          ${isScrolled 
-            ? "bg-background/80 backdrop-blur-xl border border-border shadow-lg py-2" 
-            : "bg-background/40 backdrop-blur-md border border-white/5 py-4"
+          w-full max-w-[1600px] rounded-3xl transition-all duration-500 ease-out
+          ${isScrolled
+            ? "bg-background/60 backdrop-blur-xl border border-white/5 shadow-2xl py-2"
+            : "bg-transparent py-6"
           }
         `}
       >
-        <div className="px-6 md:px-8 h-16 flex items-center justify-between">
-          
-          {/* Logo Section */}
-          <div className="flex-shrink-0">
-            <Link 
-              to="/"
-              className="flex items-center gap-3 group"
-              onClick={(e) => { 
-                if(isHomePage) { 
-                  e.preventDefault(); 
-                  handleNavClick("#home"); 
-                } 
-              }}
-            >
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Shield className="w-6 h-6 text-primary transition-transform group-hover:scale-110" />
-              </div>
-              <span className="text-xl font-bold tracking-tight text-foreground">
-                Sathish <span className="text-primary">M</span>
+        <div className="px-8 md:px-12 h-16 flex items-center justify-between">
+          {/* Logo / Brand */}
+          <Link
+            to="/"
+            onClick={scrollToTop}
+            className="flex items-center gap-5 group"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center text-primary transition-all duration-500 shadow-xl group-hover:bg-primary group-hover:text-primary-foreground transform group-hover:scale-105">
+              <Shield className="w-8 h-8" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-2xl font-display font-black tracking-tight group-hover:text-primary transition-colors">
+                SATHISH <span className="text-primary italic">M.</span>
               </span>
-            </Link>
-          </div>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground leading-none opacity-50">Operational Intel</span>
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center bg-background/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-border">
-            {navLinks.map((link) => renderNavLink(link, false))}
+          <div className="hidden lg:flex items-center gap-2">
+            {[
+              { name: "About", to: "about" },
+              { name: "Skills", to: "skills" },
+              { name: "Experience", to: "experience" },
+              { name: "Projects", to: "projects" },
+              { name: "Certifications", to: "certifications" },
+              { name: "Contact", to: "contact" },
+            ].map((item) => (
+              <button
+                key={item.name}
+                onClick={() => scrollToSection(item.to)}
+                className="relative px-5 py-2 text-sm font-black text-muted-foreground hover:text-foreground transition-all group tracking-tight"
+              >
+                {item.name}
+                <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              </button>
+            ))}
 
-            {/* Special BLOG Link with "Intelligence" Style */}
-            <Link 
-              to="/blog"
-              className={`relative ml-2 px-4 py-2 text-sm font-bold transition-all rounded-full flex items-center gap-2 group
-                ${location.pathname.startsWith('/blog') 
-                  ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(var(--primary),0.4)]" 
-                  : "text-primary bg-primary/10 hover:bg-primary/20"
+            <div className="w-[1px] h-6 bg-white/5 mx-4" />
+
+            <Link
+              to="/attack-lab"
+              className={`relative px-6 py-2.5 text-xs font-black uppercase tracking-widest transition-all rounded-xl flex items-center gap-2 group
+                ${location.pathname.startsWith('/attack-lab')
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-primary hover:bg-primary/5 border border-transparent hover:border-white/5"
                 }
               `}
             >
+              <Sword className="w-4 h-4" />
+              <span>Lab</span>
+            </Link>
+
+            <Link
+              to="/blog"
+              className={`relative px-6 py-2.5 text-xs font-black uppercase tracking-widest transition-all rounded-xl flex items-center gap-2 group
+                ${location.pathname.startsWith('/blog')
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-primary hover:bg-primary/5 border border-transparent hover:border-white/5"
+                }
+              `}
+            >
+              <Activity className="w-4 h-4" />
               <span>Blog</span>
-              {/* Pulsing Dot */}
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
             </Link>
           </div>
 
           {/* Right Actions */}
-          <div className="hidden md:flex items-center gap-3">
-            
-            {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
+          <div className="hidden md:flex items-center gap-4">
+            <button
               onClick={toggleTheme}
-              className="w-10 h-10 rounded-full hover:bg-foreground/10 text-foreground"
-              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center text-muted-foreground hover:bg-primary/5 hover:text-primary transition-all border border-white/5 shadow-inner"
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </Button>
+            </button>
 
-            <div className="h-6 w-px bg-border" />
-
-            {/* Roadmap Button */}
             <Link to="/roadmap">
-              <Button
-                size="sm"
-                className="gap-2 rounded-full px-5 h-10 font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md transition-all border-none"
-              >
-                <Map className="w-4 h-4" />
+              <button className="h-14 px-8 bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest rounded-2xl shadow-2xl shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] transition-all">
                 Roadmap
-              </Button>
+              </button>
             </Link>
           </div>
 
@@ -182,7 +194,7 @@ export function Navbar() {
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </Button>
-            
+
             <Button
               variant="ghost"
               size="icon"
@@ -194,20 +206,31 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 mt-2 mx-4 p-4 rounded-2xl bg-card border border-border shadow-2xl animate-in slide-in-from-top-2 md:hidden">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => renderNavLink(link, true))}
-              
-              {/* Mobile Blog Link */}
+
+              {/* Mobile Attack Lab */}
+              <Link
+                to="/attack-lab"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center justify-between px-4 py-3 text-sm font-bold text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl"
+              >
+                <span className="flex items-center gap-2">
+                  <Sword className="w-4 h-4" /> Attack Lab
+                </span>
+              </Link>
+
+              {/* Mobile Blog */}
               <Link
                 to="/blog"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center justify-between px-4 py-3 text-sm font-bold text-primary bg-primary/10 border border-primary/20 rounded-xl"
               >
                 <span className="flex items-center gap-2">
-                  <Terminal className="w-4 h-4" /> Access Intelligence Logs
+                  <Terminal className="w-4 h-4" /> Intelligence Logs
                 </span>
                 <Zap className="w-4 h-4 animate-pulse" />
               </Link>

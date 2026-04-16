@@ -1,171 +1,121 @@
 import { motion } from "framer-motion";
-import { MapPin, Mail, Phone, User, GraduationCap, ArrowUpRight } from "lucide-react";
+import { Mail, User, GraduationCap, Target } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const education = [
   {
-    degree: "B.E. CSE",
-    institution: "Dhanalakshmi Srinivasan Engineering College",
-    details: "CGPA: 9.3 (Autonomous), 2022 - Present",
-    year: "2022-Present"
-  },
-  {
-    degree: "HSC",
-    institution: "St. Joseph's Matric. Hr. Sec. School",
-    details: "Grade: 89%, 2020 - 2022",
-    year: "2020-2022"
+    degree: "B.E. Computer Science and Engineering",
+    institution: "Dhanalakshmi Srinivasan Engineering College , Perambalur",
+    details: "Focusing on Distributed Systems, Cloud Architecture, and Security.",
+    year: "2022 — 2026",
+    cgpa: "8.65"
   }
 ];
 
 export function About() {
   return (
-    <section id="about" className="section-padding relative overflow-hidden">
-      
-      <div className="container-custom relative z-10">
-        {/* Section Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            <span className="text-foreground">About</span> <span className="text-gradient">Me</span>
-          </h2>
-          <div className="h-1 w-24 mx-auto rounded-full bg-gradient-to-r from-primary/50 via-primary to-primary/50" />
-        </motion.div>
+    <section id="about" className="section-padding overflow-hidden relative bg-background">
+      <div className="container-custom relative z-10 w-full">
+        <div className="flex flex-col xl:flex-row justify-between gap-16 items-start">           {/* LEFT: Intro Header */}
+          <div className="xl:w-1/3 flex flex-col space-y-8">
+            <h2 className="text-5xl md:text-7xl font-display font-black tracking-tight text-foreground leading-[1.05]">
+              Strategic <br />
+              <span className="text-primary italic">Intelligence.</span>
+            </h2>
+            <div className="w-20 h-2 bg-primary" />
+            <p className="text-lg text-muted-foreground font-medium max-w-sm leading-relaxed">
+              Bridging the gap between complex security architectures and actionable offensive operations.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          {/* LEFT COLUMN: Bio & Personal Info (Span 7 cols) */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="lg:col-span-7 space-y-6"
-          >
-            {/* Main Bio Card */}
-            <div className="glass-card p-8 h-full relative group">
-              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                <User className="w-32 h-32 text-primary" />
-              </div>
-              
-              <div className="flex items-center gap-4 mb-6 relative z-10">
-                <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20 text-primary">
-                  <User className="w-6 h-6" />
+          {/* RIGHT: Detailed Bio & Info */}
+          <div className="xl:w-2/3 grid grid-cols-1 lg:grid-cols-12 gap-12 w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="lg:col-span-12 space-y-12"
+            >
+              <div className="glass-card p-12 group">
+                <div className="flex items-center gap-6 mb-12 border-b border-white/5 pb-10">
+                  <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-xl">
+                    <User className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-3xl font-display font-black tracking-tight">Biography</h3>
                 </div>
-                <h3 className="text-2xl font-bold">Who I Am</h3>
-              </div>
 
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8 relative z-10">
-                I am a passionate Computer Science student with a strong foundation in Python development 
-                and cybersecurity fundamentals. Hands-on experience in scripting, automation, secure coding 
-                practices, and vulnerability assessment.
-              </p>
-
-              {/* Tech Stack Pills (Visual decoration) */}
-              <div className="flex flex-wrap gap-2 relative z-10">
-                {['Python', 'Cybersecurity', 'Automation', 'React'].map((tag) => (
-                  <Badge key={tag} variant="secondary" className="bg-primary/5 text-primary border-primary/20 hover:bg-primary/10">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Contact Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-               <a 
-                href="mailto:sathish1012cybok@gmail.com"
-                className="glass-card p-6 flex items-start gap-4 hover:border-primary/40 transition-all cursor-pointer group"
-              >
-                <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Mail className="w-5 h-5" />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                    I am a results-driven <span className="text-foreground font-bold">Cybersecurity Analyst</span> with a strong focus on offensive security and real-world attack simulation. My work centers on identifying vulnerabilities, analyzing attack surfaces, and strengthening systems against evolving cyber threats.
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                    I specialize in <span className="text-foreground font-bold">Penetration Testing</span>, <span className="text-foreground font-bold">Web Application Security</span>, and <span className="text-foreground font-bold">AI-powered Security Solutions</span>. I have built and implemented tools such as vulnerability scanners, phishing simulation platforms, and AI-based intrusion detection systems to enhance proactive defense strategies.
+                  </p>
                 </div>
-                <div>
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Email</p>
-                  <p className="text-sm font-semibold text-foreground truncate max-w-[150px] sm:max-w-full">sathish1012cybok@gmail.com</p>
-                </div>
-              </a>
 
-              <div className="glass-card p-6 flex items-start gap-4 hover:border-primary/40 transition-all group">
-                <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Phone</p>
-                  <p className="text-sm font-semibold text-foreground">+91 95971 24881</p>
+                <div className="flex flex-wrap gap-4 mt-12">
+                  {['Pentesting', 'SecOps', 'Python', 'Exploit Dev', 'Cloud Security', 'Threat Hunting'].map((tag) => (
+                    <Badge key={tag} className="px-5 py-2.5 rounded-xl bg-secondary/50 text-foreground border-border font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm cursor-default text-xs">
+                      {tag}
+                    </Badge>
+                  ))}
                 </div>
               </div>
 
-              <div className="glass-card p-6 flex items-start gap-4 hover:border-primary/40 transition-all sm:col-span-2 group">
-                <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <MapPin className="w-5 h-5" />
+              {/* Contact Details Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <a
+                  href="mailto:sathish1012cybok@gmail.com"
+                  className="glass-card p-10 group flex items-start gap-6 hover:border-primary/30"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-inner">
+                    <Mail className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">Primary Uplink</h4>
+                    <p className="text-lg font-bold text-foreground">sathish1012cybok@gmail.com</p>
+                  </div>
+                </a>
+
+                <div className="glass-card p-10 group flex items-start gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-inner">
+                    <Target className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">Location Intel</h4>
+                    <p className="text-lg font-bold text-foreground">Viluppuram, Tamil Nadu, India</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Location</p>
-                  <p className="text-sm font-semibold text-foreground">Viluppuram, Tamil Nadu, India</p>
-                </div>
-                <ArrowUpRight className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
+        </div>
 
-          {/* RIGHT COLUMN: Education Timeline (Span 5 cols) */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="lg:col-span-5"
-          >
-            <div className="glass-card p-8 h-full">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="p-3 rounded-2xl bg-secondary/10 border border-secondary/20 text-secondary">
-                  <GraduationCap className="w-6 h-6" />
-                </div>
-                <h3 className="text-2xl font-bold">Education</h3>
-              </div>
+        {/* Education Highlight - Modern Layout */}
+        <div className="mt-32 border-t border-white/5 pt-20">
+          <div className="flex items-center gap-6 mb-16">
+            <GraduationCap className="w-12 h-12 text-primary" />
+            <h3 className="text-3xl md:text-5xl font-display font-black tracking-tight">Academic Foundations</h3>
+          </div>
 
-              <div className="space-y-12 relative pl-2">
-                {/* Vertical Line */}
-                <div className="absolute left-[11px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-primary via-secondary to-transparent" />
-
-                {education.map((edu, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, x: 10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + (index * 0.2) }}
-                    viewport={{ once: true }}
-                    className="relative pl-8 group"
-                  >
-                    {/* Timeline Dot */}
-                    <div className="absolute left-0 top-1.5 w-6 h-6 rounded-full border-4 border-background bg-primary z-10 group-hover:scale-125 transition-transform duration-300" />
-                    
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
-                      <h4 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                        {edu.degree}
-                      </h4>
-                      <Badge variant="outline" className="w-fit mt-1 sm:mt-0 text-[10px] border-primary/20 bg-primary/5">
-                        {edu.year || "2020 - Present"}
-                      </Badge>
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
+            {education.map((edu, index) => (
+              <div key={index} className="xl:col-span-12">
+                <div className="glass-card p-10 flex flex-col md:flex-row gap-10 items-center justify-between group">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-4">
+                      <span className="px-5 py-2 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">{edu.year}</span>
+                      <span className="text-muted-foreground font-mono text-xs">CGPA: {edu.cgpa}</span>
                     </div>
-                    
-                    <p className="text-base font-medium text-muted-foreground mb-2">
-                      {edu.institution}
-                    </p>
-                    <p className="text-sm text-muted-foreground/80 bg-white/5 p-3 rounded-lg border border-white/5 inline-block">
-                      {edu.details}
-                    </p>
-                  </motion.div>
-                ))}
+                    <h4 className="text-2xl md:text-3xl font-display font-black text-foreground group-hover:text-primary transition-colors">{edu.degree}</h4>
+                    <p className="text-lg text-muted-foreground font-medium">{edu.institution}</p>
+                    <p className="text-base text-muted-foreground opacity-60 mt-2 max-w-xl leading-relaxed">{edu.details}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </motion.div>
-
+            ))}
+          </div>
         </div>
       </div>
     </section>

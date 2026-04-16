@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Send, Lock, Signal, Terminal, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Lock, Signal, Terminal, Loader2, Wifi, Radio, Zap, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -28,27 +28,22 @@ export function Contact() {
     // --- CONFIGURATION ---
     const FORMSPREE_ID = "mvzpoglg";
     const TELEGRAM_TOKEN = "8515022244:AAGOMDnENoSgIiUGq7ZfRhPLsEWyBv1m7Mw";
-    const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID_HERE"; // Get this from @userinfobot on Telegram
+    const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID_HERE";
 
     try {
-      // 1. Send Email via Formspree (Background)
       const emailPromise = fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({
-          sender_identity: formData.name,
-          reply_path: formData.email,
-          subject_header: formData.subject,
+          sender: formData.name,
+          reply_to: formData.email,
+          subject: formData.subject,
           payload: formData.message,
           _subject: `[SECURE_INTEL] New Mission Brief from ${formData.name}`
         })
       });
 
-      // 2. Send Telegram Notification (Background)
-      const telegramText = 
+      const telegramText =
         `🚀 *NEW MISSION BRIEF*\n\n` +
         `👤 *Agent:* ${formData.name}\n` +
         `📧 *Email:* ${formData.email}\n` +
@@ -65,15 +60,12 @@ export function Contact() {
         })
       });
 
-      // Execute both background tasks simultaneously
       const [emailRes] = await Promise.all([emailPromise, telegramPromise]);
 
       if (emailRes.ok) {
         setSubmitted(true);
         setFormData({ name: "", email: "", subject: "", message: "" });
         toast.success("Secure Channel Established: Mission Brief Transmitted.");
-        
-        // Reset success message after 5 seconds
         setTimeout(() => setSubmitted(false), 5000);
       } else {
         throw new Error("Transmission Failed");
@@ -86,173 +78,190 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden">
+    <section id="contact" className="section-padding relative overflow-hidden bg-black pb-80">
       
-      {/* Background Decor */}
-      <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-primary/5 via-transparent to-transparent -z-10" />
+      {/* Background Matrix-like Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: 'linear-gradient(90deg, var(--primary) 1px, transparent 1px), linear-gradient(180deg, var(--primary) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
-      <div className="container-custom relative z-10">
-        
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Signal className="w-5 h-5 text-primary animate-pulse" />
-            <span className="text-sm font-medium text-primary tracking-widest uppercase">Secure Channel Open</span>
+      <div className="container-custom relative z-10 w-full">
+
+        <div className="flex flex-col xl:flex-row justify-between gap-20 items-end mb-32">
+          <div className="xl:w-1/2 space-y-10">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-primary font-black text-xs uppercase tracking-[0.5em] flex items-center gap-5"
+            >
+              <div className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-lg">Sector 05</div>
+              Secure Communications
+            </motion.div>
+            <h2 className="text-6xl md:text-[7rem] font-display font-black tracking-tighter text-white leading-[0.9] italic">
+               SECURE <span className="text-primary not-italic">UPLINK.</span>
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Initialize <span className="text-gradient">Communication</span>
-          </h2>
-          <div className="h-1 w-24 mx-auto rounded-full bg-gradient-to-r from-primary/50 via-primary to-primary/50" />
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
-          
-          {/* Left: Contact Info */}
-          <motion.div 
+          <div className="xl:w-1/3 text-xl text-zinc-500 font-medium leading-relaxed italic">
+            "Establishing point-to-point encrypted tunnels for strategic operational discussions."
+          </div>
+        </div>
+ 
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+ 
+          {/* Left: Tactical Nodes */}
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="lg:col-span-12 xl:col-span-5 space-y-16"
           >
-            <div className="glass-card p-8 relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary via-secondary to-primary" />
-              
-              <h3 className="text-2xl font-bold mb-6">Contact Intel</h3>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                Available for freelance contracts, security audits, and collaborative research projects. Telegram and Email uplinks are active.
+            <div className="space-y-8">
+              <h3 className="text-4xl md:text-5xl font-display font-black text-white italic tracking-tighter">FREQUENCY NODES</h3>
+              <p className="text-xl text-zinc-500 font-medium leading-relaxed">
+                Direct integration paths for <span className="text-white font-black italic">high-priority mission briefings</span> or tactical research collaboration.
               </p>
-
-              <div className="space-y-6">
-                {[
-                  { icon: Mail, label: "Primary Uplink", value: "sathish1012cybok@gmail.com", href: "mailto:sathish1012cybok@gmail.com" },
-                  { icon: Phone, label: "Direct Line", value: "+91 9597 124881", href: "tel:+919597124881" },
-                  { icon: MapPin, label: "Operations Base", value: "Viluppuram, Tamil Nadu, India", href: "#" }
-                ].map((item, index) => (
-                  <a 
-                    key={index}
-                    href={item.href}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-background/40 border border-white/5 hover:border-primary/30 hover:bg-background/60 transition-all group/item"
-                  >
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary group-hover/item:scale-110 transition-transform">
-                      <item.icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
-                      <p className="font-semibold text-foreground group-hover/item:text-primary transition-colors">{item.value}</p>
-                    </div>
-                  </a>
-                ))}
-              </div>
+            </div>
+ 
+            <div className="space-y-6">
+              {[
+                { icon: Mail, label: "COMM_ARRAY_01", value: "sathish1012cybok@gmail.com", href: "mailto:sathish1012cybok@gmail.com", color: "text-primary" },
+                { icon: Phone, label: "VOICE_LINK_22", value: "+91 95971 24881", href: "tel:+919597124881", color: "text-blue-400" },
+                { icon: MapPin, label: "GEO_BASE_LOC", value: "Tamil Nadu, India", href: "#", color: "text-zinc-500" }
+              ].map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="group relative flex items-center gap-8 p-10 bg-zinc-950/50 border border-white/5 rounded-[2.5rem] hover:border-primary/50 transition-all duration-500 overflow-hidden"
+                >
+                  <div className={`w-16 h-16 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center ${item.color} group-hover:bg-primary group-hover:text-black transition-all duration-500 shadow-2xl`}>
+                    <item.icon className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-2 italic">{item.label}</h4>
+                    <p className="text-lg md:text-xl font-black text-white group-hover:text-primary transition-colors tracking-tight break-all">{item.value}</p>
+                  </div>
+                  
+                  {/* Subtle Scan Line */}
+                  <div className="absolute top-0 right-0 w-2 h-full bg-primary/5 group-hover:bg-primary/20 transition-all" />
+                </a>
+              ))}
+            </div>
+            
+            <div className="p-10 bg-primary/5 border border-primary/20 rounded-[2.5rem] flex items-center gap-8">
+               <Radio className="w-12 h-12 text-primary animate-pulse" />
+               <div className="space-y-1">
+                  <div className="text-[10px] font-black text-primary uppercase tracking-widest">Signal Status</div>
+                  <div className="text-xl font-black text-white italic uppercase tracking-tighter">Hardened Channel Active</div>
+               </div>
             </div>
           </motion.div>
 
-          {/* Right: Secure Form Terminal */}
-          <motion.div 
+          {/* Right: Terminal Uplink Form */}
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
+            className="lg:col-span-12 xl:col-span-7"
           >
-            <div className="glass-card p-1 relative">
-              <div className="bg-black/40 px-4 py-2 flex items-center justify-between rounded-t-xl border-b border-white/5">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                </div>
-                <div className="flex items-center gap-1.5 text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
-                  <Lock className="w-3 h-3" />
-                  Encrypted_v3_TG
-                </div>
-              </div>
+            <div className="relative p-12 bg-[#0a0a1a] border border-white/10 rounded-[3.5rem] overflow-hidden group">
+               {/* Terminal Top Bar */}
+               <div className="absolute top-0 inset-x-0 h-14 bg-zinc-900/80 border-b border-white/10 flex items-center px-8 justify-between">
+                  <div className="flex gap-2">
+                     <div className="w-3 h-3 rounded-full bg-red-500/30" />
+                     <div className="w-3 h-3 rounded-full bg-yellow-500/30" />
+                     <div className="w-3 h-3 rounded-full bg-green-500/30" />
+                  </div>
+                  <div className="text-[10px] font-mono font-black text-zinc-500 uppercase tracking-widest flex items-center gap-3">
+                     <Terminal className="w-4 h-4 text-primary" />
+                     SECURE_UPSTREAM_PROT_V4.3
+                  </div>
+               </div>
 
-              <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-5 bg-background/40 rounded-b-xl">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider ml-1">Identity</label>
-                    <Input 
+               <form onSubmit={handleSubmit} className="space-y-10 pt-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-600 ml-2 italic">Agent_ID</label>
+                    <Input
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="Codename"
-                      className="bg-black/20 border-white/10 focus:border-primary/50 h-11"
+                      placeholder="ENTER IDENTITY..."
+                      className="bg-zinc-950/50 border-white/5 focus:border-primary/50 focus:bg-zinc-900/50 h-20 rounded-2xl px-8 text-xl font-black text-white placeholder:text-zinc-800 placeholder:italic transition-all shadow-inner"
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider ml-1">Return Path</label>
-                    <Input 
+                  <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-600 ml-2 italic">Uplink_Node</label>
+                    <Input
                       name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="email@secure.net"
-                      className="bg-black/20 border-white/10 focus:border-primary/50 h-11"
+                      placeholder="ADDR@NODE.COM"
+                      className="bg-zinc-950/50 border-white/5 focus:border-primary/50 focus:bg-zinc-900/50 h-20 rounded-2xl px-8 text-xl font-black text-white placeholder:text-zinc-800 placeholder:italic transition-all shadow-inner"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider ml-1">Subject</label>
-                  <Input 
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-600 ml-2 italic">Brief_Subject</label>
+                  <Input
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    placeholder="Op: Collaboration"
-                    className="bg-black/20 border-white/10 focus:border-primary/50 h-11"
+                    placeholder="CLASSIFIED_SUBJECT"
+                    className="bg-zinc-950/50 border-white/5 focus:border-primary/50 focus:bg-zinc-900/50 h-20 rounded-2xl px-8 text-xl font-black text-white placeholder:text-zinc-800 placeholder:italic transition-all shadow-inner"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-xs font-mono text-muted-foreground uppercase tracking-wider ml-1">Briefing</label>
-                  <Textarea 
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-600 ml-2 italic">Encrypted_Payload</label>
+                  <Textarea
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
-                    placeholder="Enter mission briefing details..."
-                    className="bg-black/20 border-white/10 focus:border-primary/50 min-h-[120px] resize-none"
+                    placeholder="INPUT ENCRYPTED MESSAGE DATA HERE..."
+                    className="bg-zinc-950/50 border-white/5 focus:border-primary/50 focus:bg-zinc-900/50 min-h-[250px] rounded-[2.5rem] px-8 py-8 text-xl font-black text-white placeholder:text-zinc-800 placeholder:italic transition-all resize-none shadow-inner"
                     required
                   />
                 </div>
 
-                <Button 
+                <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-12 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 hover:border-primary/50 transition-all group font-bold uppercase tracking-widest"
+                  className="w-full h-24 bg-primary text-black text-xl font-black uppercase tracking-[0.3em] rounded-3xl transition-all duration-500 hover:shadow-[0_0_50px_rgba(var(--primary-rgb),0.4)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-6 relative overflow-hidden group"
                 >
+                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                   {loading ? (
-                    <span className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                    <>
+                      <Loader2 className="w-10 h-10 animate-spin" />
                       SYNCHRONIZING...
-                    </span>
+                    </>
                   ) : (
-                    <span className="flex items-center gap-2">
-                      <Terminal className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      INITIATE TRANSMISSION
-                    </span>
+                    <>
+                      <Send className="w-8 h-8 transform group-hover:rotate-12 transition-transform" />
+                      TRANSMIT MISSION BRIEF
+                    </>
                   )}
-                </Button>
+                </button>
 
                 {submitted && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center gap-2 text-emerald-500 text-sm font-mono"
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-10 bg-primary/5 border border-primary/20 rounded-[2.5rem] flex items-center justify-center gap-8 text-primary"
                   >
-                    <Signal className="w-4 h-4 animate-pulse" />
-                    SIGNAL RECEIVED: TG UPLINK STABLE.
+                    <ShieldCheck className="w-10 h-10" />
+                    <div className="text-xl font-black tracking-tighter uppercase italic">
+                       Authentication Confirmed - Payload Transmitted
+                    </div>
                   </motion.div>
                 )}
-              </form>
+               </form>
             </div>
           </motion.div>
         </div>

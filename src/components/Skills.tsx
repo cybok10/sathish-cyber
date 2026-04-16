@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { 
-  Shield, Cloud, Zap, Target, 
-  Box, Skull, ExternalLink, 
-  Terminal, Cpu
+import {
+  Shield, Cloud, Zap, Target,
+  Box, Skull, ExternalLink,
+  Terminal, Cpu, Activity, Info
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 
 const skillCategories = [
   {
@@ -11,44 +13,41 @@ const skillCategories = [
     title: "Offensive Operations",
     subtitle: "Red Team & Exploitation",
     icon: Shield,
-    color: "from-red-500 to-orange-600",
-    shadow: "shadow-red-500/20",
-    border: "group-hover:border-red-500/50",
-    iconColor: "text-red-400",
     skills: [
-      "Penetration Testing", "Metasploit", "Burp Suite Pro", 
-      "Nmap Scanning", "Wireshark", "SQL Injection", 
-      "XSS Payloads", "Privilege Escalation", "Social Engineering"
+      { name: "Penetration Testing", level: 95 },
+      { name: "Metasploit", level: 90 },
+      { name: "Burp Suite Pro", level: 85 },
+      { name: "Nmap Scanning", level: 95 },
+      { name: "Exploit Dev", level: 75 },
+      { name: "Social Engineering", level: 80 }
     ]
   },
   {
     id: "coding",
-    title: "Programming & Scripting",
-    subtitle: "Automation & Backend",
+    title: "Programming / Dev",
+    subtitle: "Automation & Tooling",
     icon: Terminal,
-    color: "from-purple-500 to-pink-600",
-    shadow: "shadow-purple-500/20",
-    border: "group-hover:border-purple-500/50",
-    iconColor: "text-purple-400",
     skills: [
-      "Python (Automation)", "Bash Scripting", "Java (Spring Boot)", 
-      "C / C++", "JavaScript", "Tool Development", 
-      "Regex", "PowerShell", "Git Version Control"
+      { name: "Python", level: 92 },
+      { name: "Bash / Zsh", level: 95 },
+      { name: "Java (Spring)", level: 80 },
+      { name: "Rust / Go", level: 70 },
+      { name: "JavaScript", level: 88 },
+      { name: "Tool Automation", level: 90 }
     ]
   },
   {
     id: "cloud",
-    title: "Cloud & App Security",
-    subtitle: "Container & API Defense",
+    title: "Infrastucture",
+    subtitle: "Cloud & Network Security",
     icon: Cloud,
-    color: "from-blue-500 to-cyan-600",
-    shadow: "shadow-blue-500/20",
-    border: "group-hover:border-blue-500/50",
-    iconColor: "text-blue-400",
     skills: [
-      "Cloud Pentesting", "API Pentesting", "Docker Security", 
-      "Container Breakouts", "AWS Security Basics", "Postman", 
-      "Microservices Security", "CI/CD Pipeline Security", "Linux Admin"
+      { name: "AWS Security", level: 85 },
+      { name: "Docker Hardening", level: 90 },
+      { name: "Kubernetes Sec", level: 75 },
+      { name: "API Security", level: 88 },
+      { name: "Linux Admin", level: 95 },
+      { name: "CI/CD Security", level: 82 }
     ]
   }
 ];
@@ -56,165 +55,159 @@ const skillCategories = [
 const platforms = [
   {
     name: "TryHackMe",
-    stat: "Top 1% Rank",
+    stat: "Global Top 1%",
     url: "https://tryhackme.com/p/cybok",
     icon: Target,
     accent: "text-red-500",
-    bg: "hover:bg-red-500/10",
-    border: "hover:border-red-500/50"
   },
   {
     name: "HackTheBox",
-    stat: "Hacker Rank",
+    stat: "Hacker Tier",
     url: "https://app.hackthebox.com/profile/cybok10",
     icon: Box,
     accent: "text-emerald-500",
-    bg: "hover:bg-emerald-500/10",
-    border: "hover:border-emerald-500/50"
   },
   {
     name: "Kali Linux",
-    stat: "Daily Driver",
+    stat: "Level: Advanced",
     url: "https://www.kali.org/",
     icon: Skull,
     accent: "text-blue-500",
-    bg: "hover:bg-blue-500/10",
-    border: "hover:border-blue-500/50"
   }
 ];
 
 export function Skills() {
   return (
-    <section id="skills" className="section-padding relative overflow-hidden pb-40">
+    <section id="skills" className="section-padding relative overflow-hidden bg-black pb-40">
       
-      {/* Background Grid Effect */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)] -z-10" />
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-1/2 h-px bg-gradient-to-l from-primary/50 to-transparent" />
+      <div className="absolute top-0 right-0 w-px h-1/2 bg-gradient-to-b from-primary/50 to-transparent" />
 
-      <div className="container-custom relative z-10">
-        
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Cpu className="w-5 h-5 text-primary animate-pulse" />
-            <span className="text-sm font-bold text-primary tracking-[0.2em] uppercase">System Capabilities</span>
+      <div className="container-custom relative z-10 w-full">
+
+        <div className="flex flex-col xl:flex-row justify-between gap-16 items-end mb-32">
+          <div className="xl:w-1/2 space-y-10">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-primary font-black text-xs uppercase tracking-[0.5em] flex items-center gap-5"
+            >
+              <div className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-lg">Sector 02</div>
+              Technical Arsenal
+            </motion.div>
+            <h2 className="text-6xl md:text-[7rem] font-display font-black tracking-tighter text-white leading-[0.9] italic">
+               SKILL <span className="text-primary not-italic">INTELLIGENCE.</span>
+            </h2>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-            Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-purple-500">Arsenal</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Deployed tools and methodologies for offensive operations, secure coding, and cloud infrastructure assessments.
-          </p>
-        </motion.div>
-
-        {/* 1. High-Tech Skill Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
+          <div className="xl:w-1/3 space-y-6">
+            <p className="text-xl text-zinc-500 font-medium leading-relaxed italic">
+              "A specialized architecture designed for low-latency exploitation and robust system isolation."
+            </p>
+            <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-primary opacity-50">
+               <Activity className="w-4 h-4" /> Neural Link Active
+            </div>
+          </div>
+        </div>
+  
+        {/* 1. Technical Hub Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {skillCategories.map((cat, i) => (
             <motion.div
               key={cat.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
+              transition={{ delay: i * 0.1, duration: 0.8 }}
               viewport={{ once: true }}
-              className={`
-                group relative overflow-hidden rounded-2xl bg-background/40 backdrop-blur-xl 
-                border border-white/10 ${cat.border} transition-all duration-500 
-                hover:-translate-y-2 hover:shadow-2xl ${cat.shadow}
-              `}
+              className="relative p-12 bg-[#0a0a1a] border border-white/5 rounded-[3rem] hover:border-primary/30 transition-all duration-500 group overflow-hidden"
             >
-              <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${cat.color}`} />
+              {/* Background Glow */}
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-[80px] group-hover:bg-primary/20 transition-all duration-700" />
               
-              <div className="p-8">
-                <div className="flex items-start justify-between mb-8">
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-1">{cat.title}</h3>
-                    <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
-                      {cat.subtitle}
-                    </p>
+              <div className="relative z-10 space-y-12">
+                <div className="flex items-center gap-8">
+                  <div className="w-20 h-20 rounded-3xl bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 group-hover:bg-primary group-hover:text-black group-hover:border-black transition-all duration-500 shadow-2xl">
+                    <cat.icon className="w-10 h-10" />
                   </div>
-                  <div className={`p-3 rounded-xl bg-white/5 border border-white/10 ${cat.iconColor}`}>
-                    <cat.icon className="w-8 h-8" />
+                  <div>
+                    <h3 className="text-3xl font-display font-black text-white tracking-tight leading-none mb-2">{cat.title}</h3>
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/60">
+                      {cat.subtitle}
+                    </span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="space-y-8">
                   {cat.skills.map((skill) => (
-                    <div 
-                      key={skill} 
-                      className="
-                        relative px-3 py-1.5 text-xs font-medium text-muted-foreground 
-                        rounded-md bg-white/5 border border-white/5
-                        hover:text-foreground hover:border-white/20 hover:bg-white/10 
-                        transition-all duration-300 cursor-default
-                      "
-                    >
-                      <span className="flex items-center gap-1.5">
-                        <span className={`w-1 h-1 rounded-full bg-gradient-to-r ${cat.color}`} />
-                        {skill}
-                      </span>
+                    <div key={skill.name} className="space-y-3">
+                      <div className="flex justify-between items-center text-xs font-black uppercase tracking-widest">
+                        <span className="text-zinc-400 group-hover:text-white transition-colors">{skill.name}</span>
+                        <span className="text-primary">{skill.level}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden p-[2px]">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          transition={{ duration: 1.5, ease: "easeOut" }}
+                          viewport={{ once: true }}
+                          className="h-full bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" 
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className={`absolute -bottom-10 -right-10 w-32 h-32 bg-gradient-to-br ${cat.color} opacity-10 blur-3xl rounded-full pointer-events-none group-hover:opacity-20 transition-opacity duration-500`} />
+              {/* Decorative Label */}
+              <div className="absolute bottom-6 right-10 text-[8px] font-black text-zinc-800 uppercase tracking-[0.5em] origin-right -rotate-90">
+                Unit_Protocol_0{i+1}
+              </div>
             </motion.div>
           ))}
         </div>
-
-        {/* 2. Training Platforms Section - FIXED MARGINS & OVERLAP */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative max-w-4xl mx-auto mt-32 z-20"
-        >
-          {/* Section Divider / Title */}
-          <div className="relative mb-12">
-            <div className="absolute inset-0 flex items-center pointer-events-none" aria-hidden="true">
-              <div className="w-full border-t border-white/10"></div>
-            </div>
-            <div className="relative flex justify-center">
-              <span className="bg-[#0a0a0f] px-6 text-[10px] font-mono text-muted-foreground uppercase tracking-[0.4em]">
-                Live Training Nodes
-              </span>
-            </div>
+  
+        {/* 2. Operational Platforms */}
+        <div className="mt-40 pt-24 border-t border-white/5">
+          <div className="flex items-center justify-between mb-20">
+             <div className="space-y-3">
+               <h3 className="text-4xl md:text-5xl font-display font-black text-white tracking-tighter italic">LIVE COMMANDS</h3>
+               <p className="text-zinc-600 text-sm font-bold uppercase tracking-widest">Operational Validation Nodes</p>
+             </div>
+             <div className="hidden md:block w-32 h-1 bg-gradient-to-r from-primary to-transparent" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {platforms.map((platform) => (
-              <a 
+              <a
                 key={platform.name}
                 href={platform.url}
-                target="_blank" 
+                target="_blank"
                 rel="noreferrer"
-                className={`
-                  group flex items-center justify-between p-5 rounded-2xl border border-white/5 bg-white/[0.03] 
-                  transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer
-                  ${platform.border} ${platform.bg} backdrop-blur-md
-                `}
+                className="group relative p-10 bg-[#070715] border border-white/5 rounded-[2.5rem] flex items-center justify-between hover:border-primary/50 transition-all duration-500 overflow-hidden"
               >
-                <div className="flex items-center gap-4">
-                  <div className={`p-2.5 rounded-lg bg-background border border-white/10 ${platform.accent} group-hover:scale-110 transition-transform`}>
-                    <platform.icon className="w-6 h-6" />
+                <div className="flex items-center gap-8 relative z-10">
+                  <div className={`w-16 h-16 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center ${platform.accent} group-hover:bg-primary group-hover:text-black transition-all duration-500`}>
+                    <platform.icon className="w-8 h-8" />
                   </div>
                   <div>
-                    <div className="font-bold text-foreground text-sm">{platform.name}</div>
-                    <div className={`text-[10px] font-mono ${platform.accent} uppercase tracking-tight`}>
+                    <h4 className="text-2xl font-display font-black text-white tracking-tight mb-1">{platform.name}</h4>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-primary italic opacity-70 group-hover:opacity-100 transition-opacity">
                       {platform.stat}
-                    </div>
+                    </span>
                   </div>
                 </div>
-                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                <div className="w-14 h-14 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-600 group-hover:text-primary group-hover:border-primary group-hover:bg-black transition-all duration-500 relative z-10">
+                  <ExternalLink className="w-6 h-6" />
+                </div>
+                
+                {/* Hover Reveal Grid */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.05] transition-opacity duration-700 pointer-events-none"
+                     style={{ backgroundImage: 'linear-gradient(90deg, var(--primary) 1px, transparent 1px), linear-gradient(180deg, var(--primary) 1px, transparent 1px)', backgroundSize: '15px 15px' }} />
               </a>
             ))}
           </div>
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );
