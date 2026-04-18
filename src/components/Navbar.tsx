@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Shield, Menu, X, Moon, Sun, Map, Zap, Terminal, Sword, Activity } from "lucide-react"; // Added Sword and Activity
+import { Shield, Menu, X, Moon, Sun, Map, Zap, Terminal, Sword, Activity, Archive } from "lucide-react"; // Added Sword, Activity, Archive
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -177,8 +177,24 @@ export function Navbar() {
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
+            <Link to="/resources">
+              <button className={`h-14 px-8 text-xs font-black uppercase tracking-widest rounded-2xl transition-all mr-2
+                ${location.pathname === '/resources'
+                  ? "bg-primary text-primary-foreground shadow-2xl shadow-primary/20"
+                  : "bg-secondary text-primary hover:bg-primary hover:text-primary-foreground border border-white/5"
+                }
+              `}>
+                Archives
+              </button>
+            </Link>
+
             <Link to="/roadmap">
-              <button className="h-14 px-8 bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest rounded-2xl shadow-2xl shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] transition-all">
+              <button className={`h-14 px-8 text-xs font-black uppercase tracking-widest rounded-2xl transition-all
+                ${location.pathname === '/roadmap'
+                  ? "bg-primary text-primary-foreground shadow-2xl shadow-primary/20"
+                  : "bg-secondary text-primary hover:bg-primary hover:text-primary-foreground border border-white/5"
+                }
+              `}>
                 Roadmap
               </button>
             </Link>
@@ -236,6 +252,15 @@ export function Navbar() {
               </Link>
 
               <div className="h-px bg-border my-2" />
+
+              <Link
+                to="/resources"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 px-4 py-3 text-primary-foreground font-bold bg-secondary text-primary rounded-xl mb-2"
+              >
+                <Archive size={16} />
+                Cyber Archives
+              </Link>
 
               <Link
                 to="/roadmap"

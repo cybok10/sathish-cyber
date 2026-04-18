@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Roadmap from "./pages/Roadmap";
+import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
 import { Chatbot } from "@/components/Chatbot";
 import { Footer } from "@/components/Footer";
@@ -19,6 +20,7 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   const location = useLocation();
   const isRoadmapPage = location.pathname.toLowerCase().startsWith("/roadmap");
+  const isResourcesPage = location.pathname.toLowerCase().startsWith("/resources");
 
   useMousePosition();
 
@@ -27,18 +29,19 @@ const AppContent = () => {
       <CyberBackground />
       <Routes>
         <Route path="/" element={<Index />} />
-        
+
         {/* Blog Routes */}
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
-        
+
         <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/resources" element={<Resources />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      
+
       <LatestBlogPopup />
       <Chatbot />
-      
+
       <Footer />
     </>
   );
