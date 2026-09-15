@@ -1,36 +1,13 @@
-/* src/App.css */
-
-/* 1. Global Reset for Modern Layouts */
 #root {
   max-width: 100%;
   margin: 0;
   padding: 0;
-  text-align: left; /* Fixes the centering issue */
+  text-align: left;
   overflow-x: hidden;
 }
 
-/* 2. React Logo Animation (Optional, kept for compatibility) */
-@keyframes logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-/* 3. Floating Animation (Used for modern 3D feel) */
 .float-float { animation: float 6s ease-in-out infinite; }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-/* 4. Orbit Animation (Kept but slowed down for elegance) */
 .orbit-wrapper {
   width: 400px;
   height: 400px;
@@ -40,7 +17,7 @@
 .orbit-track {
   width: 100%;
   height: 100%;
-  animation: orbit-rotate 20s linear infinite; /* Slower = More Premium */
+  animation: orbit-rotate 24s linear infinite;
 }
 
 .orbit-item {
@@ -55,4 +32,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* CLEANUP: Removed conflicting .glass-card and .card styles */
+@media (max-width: 768px) {
+  .orbit-wrapper { width: 300px; height: 300px; margin: -30px 0 0 -30px; }
+  .orbit-item { transform: translateX(-50%) translateY(-135px); }
+}
